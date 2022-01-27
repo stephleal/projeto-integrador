@@ -33,6 +33,6 @@ public class Batch {
     @ManyToOne
     @JsonIgnore
     private ProductAnnouncement productAnnouncement;
-    @Transient
-    private Integer productId;
+    //@Transient
+    private Integer product_id;
 }
