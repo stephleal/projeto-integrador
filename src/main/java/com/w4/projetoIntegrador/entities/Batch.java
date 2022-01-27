@@ -33,10 +33,15 @@ public class Batch {
     @ManyToOne
     @JsonIgnore
     private ProductAnnouncement productAnnouncement;
+<<<<<<< HEAD
 
     @Transient
     private Integer productId;
 
     @ManyToOne
     private Inbound inbound;
+=======
+    //@Transient
+    private Integer product_id;
+>>>>>>> bereco
 }
