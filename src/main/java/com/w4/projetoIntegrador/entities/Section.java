@@ -22,7 +22,7 @@ public class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonAlias({"sectionCode"})
-    private Long id;
+    private Integer id;
     private ProductTypes type;
     private float totalSpace;
 
@@ -30,4 +30,7 @@ public class Section {
     private Warehouse warehouse;
     @Transient
     private String warehouseCode;
+
+    @ManyToOne
+    private Inbound inbound;
 }

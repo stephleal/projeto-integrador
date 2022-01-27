@@ -29,7 +29,7 @@ public class InboundController {
         batch.add(b1);
         batch.add(b2);
 
-        Section s = Section.builder().id(6L).warehouseCode("7").totalSpace(4).build();
+        Section s = Section.builder().id(6).warehouseCode("7").totalSpace(4).build();
 
         InboundDto idto = InboundDto.builder().
         orderNumber(234L).orderDate(LocalDateTime.now()).batchStock(batch).section(s).build();

@@ -20,12 +20,13 @@ public class Inbound {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private Integer id;
     private LocalDateTime date;
 
     @ManyToOne
     private Section section;
 
-    @OneToMany
+    @OneToMany(mappedBy = "inbound")
     private List<Batch> batchList;
 }
