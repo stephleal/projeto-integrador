@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -25,7 +26,7 @@ public class Batch {
     private Integer initialQuantity;
     private Integer stock;
     private LocalDateTime manufacturingDateTime;
-    private Date dueDate;
+    private LocalDate dueDate;
     private Float currentTemperature;
     private ProductTypes type;
 
