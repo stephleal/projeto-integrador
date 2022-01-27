@@ -17,6 +17,7 @@ public class Warehouse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name = "warehouse_id")
     private Long id;
     private String name;
 }

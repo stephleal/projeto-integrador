@@ -4,6 +4,8 @@ import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.enums.ProductTypes;
+import com.w4.projetoIntegrador.service.InboundService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,11 @@ import java.util.List;
 @RequestMapping("/inboundorder")
 public class InboundController {
 
+    @Autowired
+    InboundService inboundService;
+
     @GetMapping("/")
-    public InboundDto teste () {
+    public InboundDto teste() {
 
         Batch b1 = Batch.builder().id(23L).currentTemperature(23F).dueDate(LocalDate.now()).initialQuantity(2).
                 manufacturingDateTime(LocalDateTime.now()).productId(2).stock(4).type(ProductTypes.cold).build();
@@ -32,14 +37,14 @@ public class InboundController {
         Section s = Section.builder().id(6L).warehouseCode("7").totalSpace(4).build();
 
         InboundDto idto = InboundDto.builder().
-        orderNumber(234L).orderDate(LocalDateTime.now()).batchStock(batch).section(s).build();
+                orderNumber(234L).orderDate(LocalDateTime.now()).batchStock(batch).section(s).build();
 
         return idto;
     }
 
     @PostMapping
-    public ResponseEntity<List<Batch>> cadastra(@RequestBody InboundDto idto){
-        List<Batch> lb = idto.getBatchStock();
-        return ResponseEntity.ok(lb);
+    public ResponseEntity<List<Batch>> cadastra(@RequestBody InboundDto idto) {
+        return ResponseEntity.ok(inboundService.create(idto));
     }
+
 }
