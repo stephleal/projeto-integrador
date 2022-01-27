@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "sections")
-@JsonIgnoreProperties({"type","totalSpace","warehouse"})
+@JsonIgnoreProperties({"type", "totalSpace", "warehouse"})
 public class Section {
 
     @Id
@@ -26,7 +26,8 @@ public class Section {
     private ProductTypes type;
     private float totalSpace;
 
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     private Warehouse warehouse;
     @Transient
     private String warehouseCode;

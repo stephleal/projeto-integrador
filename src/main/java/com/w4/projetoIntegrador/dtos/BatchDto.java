@@ -13,5 +13,5 @@ public class BatchDto {
     private Integer currentQuantity;
     private LocalDateTime manufacturingDate;
     private LocalDate dueDate;
-    
+
 }
