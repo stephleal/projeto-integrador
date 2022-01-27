@@ -25,16 +25,16 @@ public class InboundController {
     public InboundDto teste() {
 
         Batch b1 = Batch.builder().id(23L).currentTemperature(23F).dueDate(LocalDate.now()).initialQuantity(2).
-                manufacturingDateTime(LocalDateTime.now()).productId(2).stock(4).type(ProductTypes.cold).build();
+                manufacturingDateTime(LocalDateTime.now()).product_id(2).stock(4).type(ProductTypes.cold).build();
 
         Batch b2 = Batch.builder().id(25L).currentTemperature(25F).dueDate(LocalDate.now()).initialQuantity(3).
-                manufacturingDateTime(LocalDateTime.now()).productId(3).stock(5).type(ProductTypes.frozen).build();
+                manufacturingDateTime(LocalDateTime.now()).product_id(3).stock(5).type(ProductTypes.frozen).build();
 
         List<Batch> batch = new ArrayList<Batch>();
         batch.add(b1);
         batch.add(b2);
 
-        Section s = Section.builder().id(6L).warehouseCode("7").totalSpace(4).build();
+        Section s = Section.builder().id(6L).warehouse_ids("7").totalSpace(4).build();
 
         InboundDto idto = InboundDto.builder().
                 orderNumber(234L).orderDate(LocalDateTime.now()).batchStock(batch).section(s).build();
