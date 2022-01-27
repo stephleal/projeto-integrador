@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,8 @@ public class Batch {
     private ProductTypes type;
 
     @ManyToOne
+    @JsonIgnore
     private ProductAnnouncement productAnnouncement;
-
+    @Transient
+    private Integer productId;
 }
