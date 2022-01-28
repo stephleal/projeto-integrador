@@ -20,8 +20,8 @@ public class InboundDto {
     private LocalDateTime orderDate;
 
 
-    private SectionDto section;
+    private Section section;
 
-    private List<BatchDto> batchStock;
+    private List<Batch> batchStock;
 
 }

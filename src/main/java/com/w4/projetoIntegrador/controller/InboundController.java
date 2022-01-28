@@ -4,6 +4,8 @@ import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.entities.Batch;
+import com.w4.projetoIntegrador.entities.Inbound;
+import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.service.InboundService;
@@ -23,31 +25,14 @@ public class InboundController {
     @Autowired
     InboundService inboundService;
 
-    @GetMapping("/")
-    public InboundDto teste() {
-
-        BatchDto b1 = BatchDto.builder().currentTemperature(23F).dueDate(LocalDate.now()).initialQuantity(2).
-                manufacturingDate(LocalDateTime.now()).product_id(2).currentQuantity(4).type(ProductTypes.cold).build();
-
-        BatchDto b2 = BatchDto.builder().currentTemperature(25F).dueDate(LocalDate.now()).initialQuantity(3).
-                manufacturingDate(LocalDateTime.now()).product_id(3).currentQuantity(5).type(ProductTypes.frozen).build();
-
-        List<BatchDto> batch = new ArrayList<BatchDto>();
-        batch.add(b1);
-        batch.add(b2);
-
-        SectionDto s = SectionDto.builder().id(6L).warehouseCode("7").build();
-
-        InboundDto idto = InboundDto.builder().
-                orderNumber(234L).orderDate(LocalDateTime.now()).batchStock(batch).section(s).build();
-        //inboundService.create(idto);
-        return idto;
-    }
+    @GetMapping("/{id}")
+    public Inbound getInbound(@PathVariable Long id) {
+        return inboundService.get(id);
+        }
 
     @PostMapping
-    public ResponseEntity<List<BatchDto>> cadastra(@RequestBody InboundDto idto) {
-    return ResponseEntity.ok().body(idto.getBatchStock());
-        //return ResponseEntity.ok(inboundService.create(idto));
+    public ResponseEntity<List<Batch>> cadastra(@RequestBody Inbound inbound) {
+    return ResponseEntity.ok().body(inboundService.create(inbound));
     }
 
 }
