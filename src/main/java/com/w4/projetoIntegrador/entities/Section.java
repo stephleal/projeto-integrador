@@ -21,7 +21,6 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonAlias({"sectionCode"})
     private Long id;
     private ProductTypes type;
     private float totalSpace;

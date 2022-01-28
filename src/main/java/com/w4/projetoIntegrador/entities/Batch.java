@@ -41,5 +41,9 @@ public class Batch {
     private Long productAnnouncementId;
 
     @ManyToOne
+    @JsonIgnore
     private ProductAnnouncement productAnnouncement;
+    @ManyToOne
+    @JsonIgnore
+    private Inbound inbound;
 }

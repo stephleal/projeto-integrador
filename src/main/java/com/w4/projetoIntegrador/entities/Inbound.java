@@ -26,6 +26,6 @@ public class Inbound {
     @ManyToOne
     private Section section;
 
-    @OneToMany
+    @OneToMany(mappedBy = "inbound", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Batch> batchList;
 }
