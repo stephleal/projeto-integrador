@@ -29,4 +29,7 @@ public class Section {
     @ManyToOne
     private Warehouse warehouse;
 
+    @Transient
+    private Long warehouseId;
+
 }
