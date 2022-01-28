@@ -1,8 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
-import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.entities.Seller;
-import com.w4.projetoIntegrador.service.ProductService;
 import com.w4.projetoIntegrador.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

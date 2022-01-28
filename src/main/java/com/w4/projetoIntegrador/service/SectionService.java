@@ -20,14 +20,10 @@ public class SectionService {
             return sectionRepository.findById(id).orElse(null);
         }
 
-        public Section save(Section s) {
-           Warehouse w = warehouseService.get(s.getWarehouseId());
-           Section sec = Section.builder()
-                   .warehouse(w)
-                   .totalSpace(s.getTotalSpace())
-                   .type(s.getType())
-                   .build();
-           return sectionRepository.save(sec);
+        public Section save(Section section) {
+           Warehouse w = warehouseService.get(section.getWarehouseId());
+           section.setWarehouse(w);
+           return sectionRepository.save(section);
         }
     }
 

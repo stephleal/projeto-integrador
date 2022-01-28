@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
