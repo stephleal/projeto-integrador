@@ -1,6 +1,10 @@
 package com.w4.projetoIntegrador.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +29,16 @@ public class Batch {
     private Long id;
     private Integer initialQuantity;
     private Integer stock;
+    
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime manufacturingDateTime;
     private LocalDate dueDate;
     private Float currentTemperature;
     private ProductTypes type;
+
+    @Transient
+    private Long productAnnouncementId;
 
     @ManyToOne
     private ProductAnnouncement productAnnouncement;
