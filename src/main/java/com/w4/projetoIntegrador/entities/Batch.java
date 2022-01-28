@@ -31,8 +31,5 @@ public class Batch {
     private ProductTypes type;
 
     @ManyToOne
-    @JsonIgnore
     private ProductAnnouncement productAnnouncement;
-    //@Transient
-    private Integer product_id;
 }

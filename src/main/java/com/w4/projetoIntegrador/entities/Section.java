@@ -27,9 +27,6 @@ public class Section {
     private float totalSpace;
 
     @ManyToOne
-   // @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     private Warehouse warehouse;
-   // @Transient
-    @JsonAlias({"warehouseCode"})
-    private String warehouse_ids;
+
 }

@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String name;
     private String brand;
@@ -32,4 +34,10 @@ public class ProductAnnouncement {
 
     @ManyToOne
     private Seller seller;
+
+    @Transient
+    private Long productId;
+
+    @Transient
+    private Long sellerId;
 }
