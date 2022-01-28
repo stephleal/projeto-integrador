@@ -23,7 +23,7 @@ public class InboundService {
     @Autowired
     private BatchRepository batchRepository;
     @Autowired
-    private ProductAnnouncementRepository productAnnouncementRepository;
+    private ProductAnnouncementService productAnnouncementService;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -34,6 +34,11 @@ public class InboundService {
     public List<Batch> create(Inbound inbound) {
         Section s = sectionService.get(inbound.getSection().getId());
         inbound.setSection(s);
+        for (Batch batch:inbound.getBatchList()){
+            ProductAnnouncement pa = productAnnouncementService.get(batch.getProductId());
+            batch.setProductAnnouncement(pa);
+            batch.setInbound(inbound);
+        }
         inboundRepository.save(inbound);
         return inbound.getBatchList();
     }

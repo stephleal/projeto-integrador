@@ -21,7 +21,7 @@ public class BatchService {
     }
 
     public Batch save(Batch batch) {
-        ProductAnnouncement productAnnouncement = productAnnouncementService.get(batch.getProductAnnouncementId());
+        ProductAnnouncement productAnnouncement = productAnnouncementService.get(batch.getProductId());
         batch.setProductAnnouncement(productAnnouncement);
         return batchRepository.save(batch);
     }

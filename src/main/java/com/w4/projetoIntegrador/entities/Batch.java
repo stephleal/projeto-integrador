@@ -38,7 +38,7 @@ public class Batch {
     private ProductTypes type;
 
     @Transient
-    private Long productAnnouncementId;
+    private Long productId;
 
     @ManyToOne
     @JsonIgnore
