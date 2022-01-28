@@ -20,18 +20,8 @@ public class InboundDto {
     private LocalDateTime orderDate;
 
 
-    private Section section;
+    private SectionDto section;
 
-    private List<Batch> batchStock;
+    private List<BatchDto> batchStock;
 
-    public static Inbound convert(InboundDto dto) {
-        Inbound inbound = Inbound.builder()
-                .id(dto.getOrderNumber())
-                .date(dto.getOrderDate())
-                .section(dto.getSection())
-                .batchList(dto.getBatchStock())
-                .build();
-
-        return inbound;
-    }
 }
