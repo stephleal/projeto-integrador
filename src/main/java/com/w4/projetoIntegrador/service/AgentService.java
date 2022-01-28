@@ -20,13 +20,10 @@ public class AgentService {
         return agentRepository.findById(id).orElse(null);
     }
 
-    public Agent save(Agent a) {
-        Section s = sectionService.get(a.getSectionId());
-        Agent ag = Agent.builder()
-                .name(a.getName())
-                .section(s)
-                .build();
-        return agentRepository.save(ag);
+    public Agent save(Agent agent) {
+        Section s = sectionService.get(agent.getSectionId());
+        agent.setSection(s);
+        return agentRepository.save(agent);
     }
 }
 

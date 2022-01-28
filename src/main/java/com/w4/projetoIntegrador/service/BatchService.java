@@ -4,7 +4,6 @@ import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.repository.BatchRepository;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
