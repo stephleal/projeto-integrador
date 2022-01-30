@@ -31,6 +31,16 @@ public class InboundService {
         return inbound.getBatchList();
     }
     public Inbound get(Long id){
+
         return inboundRepository.findById(id).orElse(null);
+    }
+
+    public List<Batch> update(Long id, Inbound inbound){
+        Inbound foundedInbounded = inboundRepository.findById(id).orElse(null);
+        foundedInbounded.setSection(inbound.getSection());
+        foundedInbounded.setBatchList(inbound.getBatchList());
+        foundedInbounded.setDate(inbound.getDate());
+        inboundRepository.save(foundedInbounded);
+        return inbound.getBatchList();
     }
 }
