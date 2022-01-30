@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Agent {
     private String name;
 
     @ManyToOne
+    @JsonIgnore
     private Section section;
 
     @Transient

@@ -16,12 +16,15 @@ public class BatchService {
     ProductAnnouncementService productAnnouncementService;
 
     public Batch get(Long id) {
-        return batchRepository.findById(id).orElse(null);
+        Batch batch = batchRepository.findById(id).orElse(null);
+        batch.setProductId(batch.getProductAnnouncement().getId());
+        return batch;
     }
 
     public Batch save(Batch batch) {
         ProductAnnouncement productAnnouncement = productAnnouncementService.get(batch.getProductId());
         batch.setProductAnnouncement(productAnnouncement);
+        batch.setStock(batch.getInitialQuantity());
         return batchRepository.save(batch);
     }
 }

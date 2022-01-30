@@ -17,7 +17,9 @@ public class SectionService {
 
         public Section get(Long id) {
             //TODO: lançar exceção se nulo
-            return sectionRepository.findById(id).orElse(null);
+            Section section = sectionRepository.findById(id).orElse(null);
+            section.setWarehouseId(section.getWarehouse().getId());
+            return section;
         }
 
         public Section save(Section section) {

@@ -17,7 +17,9 @@ public class AgentService {
 
     public Agent get(Long id) {
         //TODO: lançar exceção se nulo
-        return agentRepository.findById(id).orElse(null);
+        Agent agent = agentRepository.findById(id).orElse(null);
+        agent.setSectionId(agent.getSection().getId());
+        return agent;
     }
 
     public Agent save(Agent agent) {

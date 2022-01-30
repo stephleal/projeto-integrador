@@ -15,6 +15,10 @@ Tratamento de exceções
 (Incluir o modelo)
 (Collection do Postman)
 
+Refatorarações
+- Implementar dtos com interfaces de conversão (?)
+
+
 
 
 Modelo de SQL
