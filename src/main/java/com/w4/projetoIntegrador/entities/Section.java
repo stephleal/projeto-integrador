@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
@@ -21,23 +20,13 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonAlias({"sectionCode"})
-    private Integer id;
+    private Long id;
     private ProductTypes type;
     private float totalSpace;
 
     @ManyToOne
-   // @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     private Warehouse warehouse;
-<<<<<<< HEAD
-    @Transient
-    private String warehouseCode;
 
-    @ManyToOne
-    private Inbound inbound;
-=======
-   // @Transient
-    @JsonAlias({"warehouseCode"})
-    private String warehouse_ids;
->>>>>>> bereco
+    @Transient
+    private Long warehouseId;
 }

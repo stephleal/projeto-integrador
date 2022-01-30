@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,6 +26,6 @@ public class Inbound {
     @ManyToOne
     private Section section;
 
-    @OneToMany(mappedBy = "inbound")
+    @OneToMany(mappedBy = "inbound", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Batch> batchList;
 }

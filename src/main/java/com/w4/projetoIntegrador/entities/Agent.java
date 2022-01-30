@@ -22,4 +22,7 @@ public class Agent {
 
     @ManyToOne
     private Section section;
+
+    @Transient
+    private Long sectionId;
 }
