@@ -19,6 +19,6 @@ public class ProductAnnouncementController {
 
     @PostMapping()
     public ProductAnnouncement newProduct(@RequestBody ProductAnnouncement p){
-        return p; //productAnnouncementService.save(p);
+        return productAnnouncementService.save(p);
     }
 }
