@@ -3,23 +3,12 @@
 Todo list
 
 US1
-Corrigir o PUT Inbound - deve sobrescrever os batches
-Response Entity e verificar o status de response
-Implementar o URI para devolver na response
-Validação de campos
-Tratamento de exceções
-
-(Testes)
-(Documentação )
-(Readme.md)
-(Incluir o modelo)
-(Collection do Postman)
-
-Refatorarações
-- Implementar dtos com interfaces de conversão (?)
-
-
-
+- Corrigir o PUT Inbound - deve sobrescrever os batches
+- (Implementar o URI para devolver na response)
+- (Testes)
+- (Documentação )
+- (Readme.md)
+- (Incluir o modelo)
 
 Modelo de SQL
 

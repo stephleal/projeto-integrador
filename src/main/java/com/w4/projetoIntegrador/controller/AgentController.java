@@ -22,8 +22,7 @@ public class AgentController {
 
     @PostMapping()
     public ResponseEntity<Agent> newAgent(@Valid @RequestBody Agent a) {
-        return ResponseEntity.status(201).body(a);
-       // return ResponseEntity.status(201).body(agentService.save(a));
+       return ResponseEntity.status(201).body(agentService.save(a));
     }
 }
 

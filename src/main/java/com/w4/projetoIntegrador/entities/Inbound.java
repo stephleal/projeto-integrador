@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,16 +23,21 @@ public class Inbound {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Null
     private Long id;
+
     @JsonAlias("orderDate")
+    @NotNull
     private LocalDateTime date;
 
     @ManyToOne
+    @JsonIgnore
     private Section section;
 
     @Transient
+    @NotNull
     private Long sectionId;
 
-    @OneToMany(mappedBy = "inbound", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inbound", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Batch> batchList;
 }

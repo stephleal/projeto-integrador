@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +22,13 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Null
     private Long id;
+
+    @NotNull
     private ProductTypes type;
+
+    @NotNull
     private float totalSpace;
 
     @ManyToOne
@@ -29,6 +36,7 @@ public class Section {
     private Warehouse warehouse;
 
     @Transient
+    @NotNull
     private Long warehouseId;
 
 }

@@ -21,7 +21,7 @@ public class InboundService {
     private SectionService sectionService;
 
     public List<Batch> create(Inbound inbound) {
-        Section s = sectionService.get(inbound.getSection().getId());
+        Section s = sectionService.get(inbound.getSectionId());
         inbound.setSection(s);
         for (Batch batch:inbound.getBatchList()){
             ProductAnnouncement pa = productAnnouncementService.get(batch.getProductId());
@@ -43,11 +43,24 @@ public class InboundService {
     }
 
     public List<Batch> update(Long id, Inbound inbound){
+        Section s = sectionService.get(inbound.getSectionId());
         Inbound foundedInbounded = inboundRepository.findById(id).orElse(null);
-        foundedInbounded.setSection(inbound.getSection());
+        foundedInbounded.setSection(s);
+
+        foundedInbounded.setBatchList(null);
+
+        for (Batch batch:inbound.getBatchList()){
+            ProductAnnouncement pa = productAnnouncementService.get(batch.getProductId());
+            batch.setProductAnnouncement(pa);
+            batch.setStock(batch.getInitialQuantity());
+            batch.setInbound(foundedInbounded);
+        }
+
         foundedInbounded.setBatchList(inbound.getBatchList());
+
         foundedInbounded.setDate(inbound.getDate());
-        inboundRepository.save(foundedInbounded);
+
+        //inboundRepository.saveAndFlush(foundedInbounded);
         return foundedInbounded.getBatchList();
     }
 }

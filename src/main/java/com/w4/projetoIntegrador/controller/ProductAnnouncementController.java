@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/productannouncements")
 public class ProductAnnouncementController {
@@ -19,7 +21,7 @@ public class ProductAnnouncementController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductAnnouncement> newProduct(@RequestBody ProductAnnouncement p){
+    public ResponseEntity<ProductAnnouncement> newProduct(@Valid @RequestBody ProductAnnouncement p){
         return ResponseEntity.status(201).body(productAnnouncementService.save(p));
     }
 }

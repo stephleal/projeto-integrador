@@ -23,7 +23,6 @@ public class PersistenceExceptionAdvice {
     @Autowired
     private MessageSource messageSource;
 
-
     @ExceptionHandler(value = NullPointerException.class)
     protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();

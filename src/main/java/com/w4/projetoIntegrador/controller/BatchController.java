@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/batches")
 public class BatchController {
@@ -27,7 +29,7 @@ public class BatchController {
     }
 
     @PostMapping()
-    public ResponseEntity<Batch> newBatch(@RequestBody Batch batch) {
+    public ResponseEntity<Batch> newBatch(@Valid @RequestBody Batch batch) {
         return ResponseEntity.status(201).body(batchService.save(batch));
     }
 

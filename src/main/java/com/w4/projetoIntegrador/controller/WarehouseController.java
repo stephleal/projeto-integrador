@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/warehouses")
 public class WarehouseController {
@@ -20,7 +22,7 @@ public class WarehouseController {
     }
 
     @PostMapping()
-    public ResponseEntity<Warehouse> newWarehouse(@RequestBody Warehouse wh) {
+    public ResponseEntity<Warehouse> newWarehouse(@Valid @RequestBody Warehouse wh) {
 
         return ResponseEntity.status(201).body(warehouseService.save(wh));
     }
