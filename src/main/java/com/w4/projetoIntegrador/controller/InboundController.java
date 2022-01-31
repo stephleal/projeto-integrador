@@ -26,4 +26,8 @@ public class InboundController {
     return ResponseEntity.ok().body(inboundService.create(inbound));
     }
 
+    @PutMapping("/{id}")
+    public List<Batch> putIndound(@RequestBody Inbound inbound, @PathVariable Long id){
+        return inboundService.update(id, inbound);
+    }
 }

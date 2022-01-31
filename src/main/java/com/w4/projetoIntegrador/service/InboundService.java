@@ -25,12 +25,23 @@ public class InboundService {
         for (Batch batch:inbound.getBatchList()){
             ProductAnnouncement pa = productAnnouncementService.get(batch.getProductId());
             batch.setProductAnnouncement(pa);
+            batch.setStock(batch.getInitialQuantity());
             batch.setInbound(inbound);
         }
         inboundRepository.save(inbound);
         return inbound.getBatchList();
     }
     public Inbound get(Long id){
-        return inboundRepository.findById(id).orElse(null);
+        Inbound inbound = inboundRepository.findById(id).orElse(null);
+        return inbound;
+    }
+
+    public List<Batch> update(Long id, Inbound inbound){
+        Inbound foundedInbounded = inboundRepository.findById(id).orElse(null);
+        foundedInbounded.setSection(inbound.getSection());
+        foundedInbounded.setBatchList(inbound.getBatchList());
+        foundedInbounded.setDate(inbound.getDate());
+        inboundRepository.save(foundedInbounded);
+        return foundedInbounded.getBatchList();
     }
 }

@@ -21,7 +21,10 @@ public class ProductAnnouncementService {
 
     public ProductAnnouncement get(Long id){
         //TODO: lançar exceção
-        return productAnnouncementRepository.findById(id).orElse(null);
+        ProductAnnouncement productAnnouncement = productAnnouncementRepository.findById(id).orElse(null);
+        productAnnouncement.setProductId(productAnnouncement.getProduct().getId());
+        productAnnouncement.setSellerId(productAnnouncement.getSeller().getId());
+        return productAnnouncement;
 
     }
 

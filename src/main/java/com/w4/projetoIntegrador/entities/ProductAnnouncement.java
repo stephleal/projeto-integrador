@@ -19,7 +19,6 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
     private String name;
     private String brand;
@@ -29,9 +28,11 @@ public class ProductAnnouncement {
     private Float maximumTemperature;
 
     @ManyToOne
+    @JsonIgnore
     private Product product;
 
     @ManyToOne
+    @JsonIgnore
     private Seller seller;
 
     @Transient

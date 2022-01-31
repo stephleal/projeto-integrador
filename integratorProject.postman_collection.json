@@ -1,0 +1,587 @@
+{
+	"info": {
+		"_postman_id": "37dfd841-3f14-450b-8aba-3098f1ea66a7",
+		"name": "integratorProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD by Entities",
+			"item": [
+				{
+					"name": "Agents",
+					"item": [
+						{
+							"name": "New Agent",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Marta\",\n    \"sectionId\":2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/agents/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"agents",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Agent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/agents/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"agents",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Batches",
+					"item": [
+						{
+							"name": "New Batch",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"initialQuantity\":400,\n\"manufacturingDateTime\": \"2022-01-27T15:13:31.253314\",\n\"dueDate\":\"2023-01-27\",\n\"currentTemperature\": 2,\n\"type\":\"congelado\",\n\"productId\":2\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/batches/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"batches",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Batch",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/batches/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"batches",
+										"22"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Inbounds",
+					"item": [
+						{
+							"name": "New Inbound Order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderNumber\": 234,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"section\": {\n        \"id\": 6,\n        \"warehouseCode\": 1\n    },\n    \"batchList\": [\n        {\n            \"initialQuantity\": 42,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253314\",\n            \"dueDate\": \"2023-01-27\",\n            \"currentTemperature\": 2,\n            \"type\": \"congelado\",\n            \"productId\": 1\n        },\n        {\n            \"initialQuantity\": 42,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 25.0,\n            \"type\": \"refrigerado\",\n            \"productId\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Inbound Order",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Inbound Order",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderNumber\": 234,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"section\": {\n        \"id\": 2,\n        \"warehouseCode\": \"1\"\n    },\n    \"batchList\": [\n        {\n            \"initialQuantity\": 420,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253291\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 23.0,\n            \"type\": \"fresco\",\n            \"productId\": 1\n        },\n        {\n            \"initialQuantity\": 420,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 25.0,\n            \"type\": \"fresco\",\n            \"productId\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										"11"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "New Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"salada\",\n    \"productType\":\"frozen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ProductsAnnouncements",
+					"item": [
+						{
+							"name": "New Product Announcement",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"produto4\",\n    \"sellerId\": 1,\n    \"maximumTemperature\": 10,\n    \"minimumTemperature\": 5,\n    \"volume\": 10,\n    \"price\": 10,\n    \"brand\": \"ceara\",\n    \"productId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/productannouncements/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"productannouncements",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product Announcement",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/productannouncements/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"productannouncements",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sections",
+					"item": [
+						{
+							"name": "New Section",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\":\"congelado\",\n    \"totalSpace\":\"10000\",\n    \"warehouseId\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sections/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sections",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get section",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sections/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sections",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sellers",
+					"item": [
+						{
+							"name": "New Seller",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"João\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sellers/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sellers",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Seller",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sellers/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sellers",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Warehouses",
+					"item": [
+						{
+							"name": "New Warehouse",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"CD Osasco\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/warehouses/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"warehouses",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Warehouse",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/warehouses/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"warehouses",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
