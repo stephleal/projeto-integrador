@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "sections")
-@JsonIgnoreProperties({"type", "totalSpace", "warehouse"})
 public class Section {
 
     @Id
@@ -25,6 +25,7 @@ public class Section {
     private float totalSpace;
 
     @ManyToOne
+    @JsonIgnore
     private Warehouse warehouse;
 
     @Transient

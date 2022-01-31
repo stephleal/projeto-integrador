@@ -1,5 +1,7 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,12 +21,15 @@ public class Inbound {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
+    @JsonAlias("orderDate")
     private LocalDateTime date;
 
     @ManyToOne
     private Section section;
+
+    @Transient
+    private Long sectionId;
 
     @OneToMany(mappedBy = "inbound", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Batch> batchList;

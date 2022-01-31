@@ -19,7 +19,6 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
     private String name;
     private String brand;

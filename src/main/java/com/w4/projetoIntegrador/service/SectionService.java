@@ -1,7 +1,9 @@
 package com.w4.projetoIntegrador.service;
 
+import org.hibernate.exception.GenericJDBCException;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.entities.Warehouse;
+import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,13 @@ public class SectionService {
         WarehouseService warehouseService;
 
         public Section get(Long id) {
-            //TODO: lançar exceção se nulo
-            return sectionRepository.findById(id).orElse(null);
+            try {
+                Section section = sectionRepository.findById(id).orElse(null);
+                section.setWarehouseId(section.getWarehouse().getId());
+                return section;
+            } catch (RuntimeException e) {
+                throw new NotFoundException("Section " + id + " não encontrada na base de dados.");
+            }
         }
 
         public Section save(Section section) {
