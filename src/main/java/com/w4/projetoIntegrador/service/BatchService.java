@@ -2,6 +2,7 @@ package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
+import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,13 @@ public class BatchService {
     ProductAnnouncementService productAnnouncementService;
 
     public Batch get(Long id) {
-        Batch batch = batchRepository.findById(id).orElse(null);
-        batch.setProductId(batch.getProductAnnouncement().getId());
-        return batch;
+        try {
+            Batch batch = batchRepository.findById(id).orElse(null);
+            batch.setProductId(batch.getProductAnnouncement().getId());
+            return batch;
+        } catch (RuntimeException e) {
+            throw new NotFoundException("Batch " + id + " não encontrado na base de dados.");
+        }
     }
 
     public Batch save(Batch batch) {

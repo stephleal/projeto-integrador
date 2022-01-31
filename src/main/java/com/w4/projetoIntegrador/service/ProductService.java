@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.entities.Product;
+import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,11 @@ public class ProductService {
     ProductRepository productRepository;
 
     public Product get(Long id) {
-        //TODO: lançar exceção se nulo
-        return productRepository.findById(id).orElse(null);
+        try {
+            return productRepository.findById(id).orElse(null);
+        } catch (RuntimeException e) {
+            throw new NotFoundException("Product " + id + " não encontrada na base de dados.");
+        }
     }
 
     public Product save(Product p) {
