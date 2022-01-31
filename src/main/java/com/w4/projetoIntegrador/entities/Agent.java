@@ -5,9 +5,10 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Data
@@ -23,7 +24,8 @@ public class Agent {
     @Null
     private Long id;
 
-    @NotEmpty(message = "Nome não pode ser nulo ou vazio")
+    @NotNull
+    @NotEmpty
     private String name;
 
     @ManyToOne
@@ -31,6 +33,6 @@ public class Agent {
     private Section section;
 
     @Transient
-    @NotNull(message = "sectionId não pode ser nulo")
+    @NotNull
     private Long sectionId;
 }

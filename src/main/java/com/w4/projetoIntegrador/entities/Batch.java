@@ -12,6 +12,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Past;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -25,18 +31,29 @@ public class Batch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Null
     private Long id;
+
+    //@NotNull
     private Integer initialQuantity;
+
     private Integer stock;
     
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @NotNull
     private LocalDateTime manufacturingDateTime;
+
+    @NotNull
     private LocalDate dueDate;
+
+    @NotNull
     private Float currentTemperature;
+
     private ProductTypes type;
 
     @Transient
+    @NotNull
     private Long productId;
 
     @ManyToOne

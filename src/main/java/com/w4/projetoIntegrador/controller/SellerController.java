@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/sellers")
 public class SellerController {
@@ -19,7 +21,7 @@ public class SellerController {
         }
 
         @PostMapping()
-        public ResponseEntity <Seller> newSeller(@RequestBody Seller s){
+        public ResponseEntity <Seller> newSeller(@Valid @RequestBody Seller s){
             return ResponseEntity.status(201).body(sellerService.save(s));
         }
     }

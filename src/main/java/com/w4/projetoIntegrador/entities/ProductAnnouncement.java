@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 
 @Data
@@ -19,12 +22,27 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Null
     private Long id;
+
+    @NotNull
+    @NotEmpty
     private String name;
+
+    @NotNull
+    @NotEmpty
     private String brand;
+
+    @NotNull
     private BigDecimal price;
+
+    @NotNull
     private Float volume;
+
+    @NotNull
     private Float minimumTemperature;
+
+    @NotNull
     private Float maximumTemperature;
 
     @ManyToOne
@@ -36,8 +54,10 @@ public class ProductAnnouncement {
     private Seller seller;
 
     @Transient
+    @NotNull
     private Long productId;
 
     @Transient
+    @NotNull
     private Long sellerId;
 }
