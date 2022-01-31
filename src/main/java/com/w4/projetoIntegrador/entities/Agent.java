@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Data
@@ -18,10 +20,10 @@ public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Null
     private Long id;
 
-    @NotNull(message = "Name cannot be null")
-    @NotEmpty(message = "Name cannot be null")
+    @NotEmpty(message = "Nome não pode ser nulo ou vazio")
     private String name;
 
     @ManyToOne
@@ -29,5 +31,6 @@ public class Agent {
     private Section section;
 
     @Transient
+    @NotNull(message = "sectionId não pode ser nulo")
     private Long sectionId;
 }

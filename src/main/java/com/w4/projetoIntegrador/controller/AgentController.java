@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+//import org.hibernate.validator.constraints.Valid;
+
 @RestController
 @RequestMapping("/agents")
 public class AgentController {
@@ -20,10 +22,9 @@ public class AgentController {
         return agentService.get(id);
     }
 
-    @PostMapping()
+    @PostMapping("/")
     public ResponseEntity<Agent> newAgent(@Valid @RequestBody Agent a) {
-        return ResponseEntity.status(201).body(a);
-       // return ResponseEntity.status(201).body(agentService.save(a));
+        return ResponseEntity.status(201).body(agentService.save(a));
     }
 }
 
