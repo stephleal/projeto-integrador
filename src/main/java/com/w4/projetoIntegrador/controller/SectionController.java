@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/sections")
 public class SectionController {
@@ -21,7 +23,7 @@ public class SectionController {
     }
 
     @PostMapping()
-    public  ResponseEntity<Section> newSection(@RequestBody Section s) {
+    public  ResponseEntity<Section> newSection(@Valid @RequestBody Section s) {
 
         return ResponseEntity.status(201).body(sectionService.save(s));
     }
