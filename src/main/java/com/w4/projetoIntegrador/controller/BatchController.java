@@ -4,6 +4,7 @@ import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.service.BatchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,8 @@ public class BatchController {
     }
 
     @PostMapping()
-    public Batch newBatch(@RequestBody Batch batch) {
-        return batchService.save(batch);
+    public ResponseEntity<Batch> newBatch(@RequestBody Batch batch) {
+        return ResponseEntity.status(201).body(batchService.save(batch));
     }
 
 }
