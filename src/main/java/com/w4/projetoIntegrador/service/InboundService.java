@@ -42,6 +42,6 @@ public class InboundService {
         foundedInbounded.setBatchList(inbound.getBatchList());
         foundedInbounded.setDate(inbound.getDate());
         inboundRepository.save(foundedInbounded);
-        return inbound.getBatchList();
+        return foundedInbounded.getBatchList();
     }
 }
