@@ -3,6 +3,7 @@ package com.w4.projetoIntegrador.controller;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,9 +20,9 @@ public class WarehouseController {
     }
 
     @PostMapping()
-    public Warehouse newWarehouse(@RequestBody Warehouse wh) {
+    public ResponseEntity<Warehouse> newWarehouse(@RequestBody Warehouse wh) {
 
-        return warehouseService.save(wh);
+        return ResponseEntity.status(201).body(warehouseService.save(wh));
     }
 }
 

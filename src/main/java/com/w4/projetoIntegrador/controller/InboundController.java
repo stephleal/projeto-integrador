@@ -23,11 +23,11 @@ public class InboundController {
 
     @PostMapping
     public ResponseEntity<List<Batch>> cadastra(@RequestBody Inbound inbound) {
-    return ResponseEntity.ok().body(inboundService.create(inbound));
+    return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 
     @PutMapping("/{id}")
-    public List<Batch> putIndound(@RequestBody Inbound inbound, @PathVariable Long id){
-        return inboundService.update(id, inbound);
+    public ResponseEntity<List<Batch>> putIndound(@RequestBody Inbound inbound, @PathVariable Long id){
+        return ResponseEntity.status(201).body(inboundService.update(id, inbound));
     }
 }

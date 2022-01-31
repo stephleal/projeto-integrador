@@ -3,6 +3,7 @@ package com.w4.projetoIntegrador.controller;
 import com.w4.projetoIntegrador.entities.Seller;
 import com.w4.projetoIntegrador.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +19,8 @@ public class SellerController {
         }
 
         @PostMapping()
-        public Seller newSeller(@RequestBody Seller s){
-            return sellerService.save(s);
+        public ResponseEntity <Seller> newSeller(@RequestBody Seller s){
+            return ResponseEntity.status(201).body(sellerService.save(s));
         }
     }
 
