@@ -23,7 +23,7 @@ public class Inbound {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null
+    //@Null
     private Long id;
 
     @JsonAlias("orderDate")

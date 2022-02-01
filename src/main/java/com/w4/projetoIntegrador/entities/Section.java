@@ -22,7 +22,7 @@ public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null
+    //@Null
     private Long id;
 
     @NotNull
@@ -38,5 +38,4 @@ public class Section {
     @Transient
     @NotNull
     private Long warehouseId;
-
 }

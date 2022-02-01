@@ -24,6 +24,7 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<Product> newProduct(@Valid @RequestBody Product p){
+        ProductTypes.valueOf("refrigerado");
         return ResponseEntity.status(201).body(productService.save(p));
     }
 
