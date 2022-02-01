@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +16,8 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "purchases_products")
-public class PurchaseProduct {
+@Table(name = "items_cart")
+public class ItemCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +28,16 @@ public class PurchaseProduct {
     private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
-    private PurchaseOrder purchaseOrder;
+    @JsonIgnore
+    private Cart cart;
 
     @NotNull
     private Integer quantity;
 
     @Transient
     private Long productAnnouncementId;
-
-    @Transient
-    private Long purchaseOrderId;
+//
+//    @Transient
+//    private Long purchaseOrderId;
 
 }

@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "purchases_orders")
-public class PurchaseOrder {
+@Table(name = "carts")
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +26,13 @@ public class PurchaseOrder {
     private LocalDate date;
 
     @Transient
-    @NotNull
+    //@NotNull
     private Long buyerId;
 
     private String statusCode;
 
-    @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<PurchaseProduct> purchaseProducts;
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ItemCart> itemCarts;
 
     @ManyToOne
     private Buyer buyer;
