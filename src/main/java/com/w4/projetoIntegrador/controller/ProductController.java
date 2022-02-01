@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.entities.Product;
+import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<Product> newProduct(@Valid @RequestBody Product p){
+        ProductTypes.valueOf("refrigerado");
         return ResponseEntity.status(201).body(productService.save(p));
     }
 }
