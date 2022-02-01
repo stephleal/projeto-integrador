@@ -1,6 +1,8 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Product;
+import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +38,11 @@ public class ProductController {
     @GetMapping("/list")
     public List<Product> getProductlistByCategory(@RequestParam String category){
         return productService.getProductListByCategory(category);
+    }
+
+    @GetMapping("/loc")
+    public ResponseEntity<List<Batch>> getProductLocation(@RequestParam Long id) {
+        
+        return ResponseEntity.status(200).body(productService.getProductLocation(id));
     }
 }
