@@ -4,10 +4,12 @@ import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ProductRepository;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,7 @@ public class ProductService {
     public List<Product> getProductListByCategory(String category) {
 
         List<Product> productListByCategory = getProductList();
+
 
         productListByCategory = productListByCategory.stream().filter(product -> ProductTypes.values()[Integer.parseInt(product.getProductType())].equals(ProductTypes.valueOf(category))).collect(Collectors.toList());
 
