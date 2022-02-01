@@ -54,7 +54,6 @@ public class InboundService {
         foundedInbound.setSectionId(inbound.getSectionId());
         foundedInbound.setDate(inbound.getDate());
         List<Batch> newBatchList = new ArrayList<>();
-
         for (Batch payloadBatch:inbound.getBatchList()){
             Batch foundedBatch = batchService.get(payloadBatch.getId());
             if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
@@ -69,9 +68,7 @@ public class InboundService {
             foundedBatch.setInbound(foundedInbound);
             newBatchList.add(foundedBatch);
         }
-
         foundedInbound.setBatchList(newBatchList);
-
         inboundRepository.save(foundedInbound);
         return foundedInbound;
     }

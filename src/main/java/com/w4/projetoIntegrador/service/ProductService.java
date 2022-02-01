@@ -41,14 +41,18 @@ public class ProductService {
             throw new NotFoundException("Não existem produtos cadastrados na base de dados");
 
         return productList;
-
     }
 
     public List<Product> getProductListByCategory(String category) {
 
         List<Product> productListByCategory = getProductList();
 
-        productListByCategory = productListByCategory.stream().filter(product -> ProductTypes.values()[Integer.parseInt(product.getProductType())].equals(ProductTypes.valueOf(category))).collect(Collectors.toList());
+        productListByCategory = productListByCategory
+                .stream()
+                .filter(product -> ProductTypes
+                        .values()[Integer.parseInt(product.getProductType())]
+                        .equals(ProductTypes.valueOf(category)))
+                .collect(Collectors.toList());
 
         if (productListByCategory.size() == 0)
             throw new NotFoundException("Não existem produtos cadastrados nessa categoria na base de dados");
