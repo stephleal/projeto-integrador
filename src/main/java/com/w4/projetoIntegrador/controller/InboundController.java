@@ -23,7 +23,7 @@ public class InboundController {
         }
 
     @PostMapping
-    public ResponseEntity<List<Batch>> cadastra(@Valid @RequestBody Inbound inbound) {
+    public ResponseEntity<List<Batch>> cadastra(@Valid @RequestBody InboundDto inbound) {
     return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 

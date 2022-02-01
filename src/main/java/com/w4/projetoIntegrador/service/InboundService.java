@@ -1,5 +1,7 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.BatchDto;
+import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
@@ -49,12 +51,13 @@ public class InboundService {
        }
     }
 
-    public Inbound update(Long id, Inbound inbound){
+    public InboundDto update(Long id, InboundDto inbound){
         Inbound foundedInbound = inboundRepository.findById(id).orElse(null);
         foundedInbound.setSectionId(inbound.getSectionId());
         foundedInbound.setDate(inbound.getDate());
         List<Batch> newBatchList = new ArrayList<>();
-        for (Batch payloadBatch:inbound.getBatchList()){
+
+        for (BatchDto payloadBatch:inbound.getBatchList()){
             Batch foundedBatch = batchService.get(payloadBatch.getId());
             if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
             foundedBatch.setInitialQuantity(payloadBatch.getInitialQuantity());
