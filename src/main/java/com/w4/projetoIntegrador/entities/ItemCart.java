@@ -1,8 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,30 +10,34 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "sections")
-public class Section {
+@Table(name = "items_cart")
+public class ItemCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Null
+    @Null
     private Long id;
 
-    @NotNull
-    private ProductTypes type;
-
-    @NotNull
-    private float totalSpace;
+    @ManyToOne
+    private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
     @JsonIgnore
-    private Warehouse warehouse;
+    private Cart cart;
+
+    @NotNull
+    private Integer quantity;
 
     @Transient
-    @NotNull
-    private Long warehouseId;
+    private Long productAnnouncementId;
+//
+//    @Transient
+//    private Long purchaseOrderId;
+
 }

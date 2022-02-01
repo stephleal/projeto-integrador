@@ -22,7 +22,7 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null
+    //@Null
     private Long id;
 
     @NotNull

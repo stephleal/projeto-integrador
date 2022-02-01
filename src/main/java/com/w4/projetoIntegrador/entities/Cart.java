@@ -1,35 +1,40 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "carts")
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Null
     private Long id;
 
     @NotNull
-    @NotEmpty
-    private String name;
+    private LocalDate date;
 
-    @NotNull
-    private String productType;
+    @Transient
+    //@NotNull
+    private Long buyerId;
+
+    private String statusCode;
+
+    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ItemCart> itemCarts;
+
+    @ManyToOne
+    private Buyer buyer;
 
 }
