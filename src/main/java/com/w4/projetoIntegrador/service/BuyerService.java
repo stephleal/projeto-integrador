@@ -21,6 +21,7 @@ public class BuyerService {
     }
 
     public Buyer create(Buyer buyer) {
+
         return buyerRepository.save(buyer);
     }
 }
