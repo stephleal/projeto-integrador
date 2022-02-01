@@ -32,4 +32,6 @@ public class BatchService {
         batch.setStock(batch.getInitialQuantity());
         return batchRepository.save(batch);
     }
+
+
 }
