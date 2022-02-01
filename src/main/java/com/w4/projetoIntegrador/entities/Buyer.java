@@ -22,6 +22,8 @@ public class Buyer {
     @Null
     private Long id;
 
+    private String name;
+
     @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PurchaseOrder> purchaseOrder;
 }
