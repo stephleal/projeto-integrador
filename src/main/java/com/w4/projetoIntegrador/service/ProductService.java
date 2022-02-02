@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.ProductDto;
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
@@ -26,9 +27,10 @@ public class ProductService {
         }
     }
 
-    public Product save(Product p) {
+    public Product save(ProductDto p) {
+        Product product = ProductDto.convert(p);
 
-        return productRepository.save(p);
+        return productRepository.save(product);
     }
 
     public List<Product> getProductList() {
@@ -47,12 +49,19 @@ public class ProductService {
 
         List<Product> productListByCategory = getProductList();
 
+//        productListByCategory = productListByCategory
+//                .stream()
+//                .filter(product -> ProductTypes
+//                        .values()[Integer.parseInt(product.getProductType())]
+//                        .equals(ProductTypes.valueOf(category)))
+//                .collect(Collectors.toList());
+
+
         productListByCategory = productListByCategory
                 .stream()
-                .filter(product -> ProductTypes
-                        .values()[Integer.parseInt(product.getProductType())]
-                        .equals(ProductTypes.valueOf(category)))
+                .filter(product -> product.equals(ProductTypes.valueOf(category)))
                 .collect(Collectors.toList());
+
 
         if (productListByCategory.size() == 0)
             throw new NotFoundException("Não existem produtos cadastrados nessa categoria na base de dados");

@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,6 @@ public class Product {
     private String name;
 
     @NotNull
-    private String productType;
+    private ProductTypes productType;
 
 }

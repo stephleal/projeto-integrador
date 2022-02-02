@@ -2,9 +2,18 @@
 
 Todo list
 
-US1
-- Corrigir o PUT Inbound - deve sobrescrever os batches
+### US1
 - (Implementar o URI para devolver na response)
+
+
+### US2
+- Put de order
+- Tratamento de erro em caso de produto sem estoque
+
+### US3
+
+### Revisão final
+- Refatorar Classes separando Entities de DTOs
 - (Testes)
 - (Documentação )
 - (Readme.md)
@@ -26,7 +35,7 @@ insert into products (name, product_type) values ("presunto", 1),("queijo",1),("
 
 insert into sellers (name) values ("Iberê"),("Stephanie"),("Lucas"),("Mauro"),("Matheus");
 
-insert into products_announcements (brand, maximum_temperature, minimum_temperature, name, price, volume, product_id, seller_id) values 
+insert into products_announcements (brand, maximum_temperature, minimum_temperature, name, price, volume, product_id, seller_id) values
 ("sadia", 10, 5, "presunto sadia",15,0.5,1, 1),
 ("três marias", 10, 5, "queijo 3 marias",20,0.4,2, 2),
 ("turma da mônica", 15, 10, "maçã turma da mônica",10,1,3, 3),

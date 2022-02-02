@@ -5,18 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.w4.projetoIntegrador.enums.ProductTypes;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,12 +27,12 @@ public class Batch {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Null
     private Long id;
 
-    //@NotNull
+    @NotNull
     private Integer initialQuantity;
 
+    @NotNull
     private Integer stock;
     
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -50,17 +46,16 @@ public class Batch {
     @NotNull
     private Float currentTemperature;
 
-    private ProductTypes type;
-
-    @Transient
-    @NotNull
-    private Long productId;
+//    @NotNull
+//    private ProductTypes type;
 
     @ManyToOne
     @JsonIgnore
+    @NotNull
     private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
     @JsonIgnore
+    @NotNull
     private Inbound inbound;
 }

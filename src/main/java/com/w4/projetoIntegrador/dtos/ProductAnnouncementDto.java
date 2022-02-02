@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductAnnouncement {
+public class ProductAnnouncementDto {
 
     //@Null
     private Long id;

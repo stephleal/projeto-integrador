@@ -1,5 +1,7 @@
 package com.w4.projetoIntegrador.dtos;
 
+import com.w4.projetoIntegrador.entities.Product;
+import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,14 +18,17 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ProductDto {
 
-    //@Null
-    private Long id;
-
     @NotNull
     @NotEmpty
     private String name;
 
     @NotNull
+    @NotEmpty
     private String productType;
 
+    public static Product convert(ProductDto p){
+        ProductTypes type = ProductTypes.valueOf(p.getProductType());
+        Product product = Product.builder().name(p.getName()).productType(type).build();
+        return  product;
+    }
 }

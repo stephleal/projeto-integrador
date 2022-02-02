@@ -27,7 +27,7 @@ public class ProductAnnouncementService {
         productAnnouncement.setSellerId(productAnnouncement.getSeller().getId());
         return productAnnouncement;
     } catch (RuntimeException e) {
-        throw new NotFoundException("ProductAnnouncement  " + id + " não encontrada na base de dados.");
+        throw new NotFoundException("ProductAnnouncementDto  " + id + " não encontrada na base de dados.");
     }
     }
 

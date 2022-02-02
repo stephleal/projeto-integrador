@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.ProductDto;
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.service.ProductService;
@@ -23,8 +24,9 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> newProduct(@Valid @RequestBody Product p){
-        ProductTypes.valueOf("refrigerado");
+    public ResponseEntity<Product> newProduct(@Valid @RequestBody ProductDto p){
+
+//        ProductTypes.valueOf("refrigerado");
         return ResponseEntity.status(201).body(productService.save(p));
     }
 

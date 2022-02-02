@@ -21,7 +21,7 @@ public class ItemCartDto {
     private Long id;
 
     @ManyToOne
-    private ProductAnnouncement productAnnouncement;
+    private ProductAnnouncementDto productAnnouncementDto;
 
     @JsonIgnore
     private CartDto cartDto;

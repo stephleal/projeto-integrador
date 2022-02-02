@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
+import com.w4.projetoIntegrador.entities.Section;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,22 +23,24 @@ import java.util.List;
 @Builder
 public class InboundDto {
 
-    //@Null
-    private Long id;
+    private Long orderNumber;
 
     @JsonAlias("orderDate")
-    @NotNull
     private LocalDateTime date;
-
-    @JsonIgnore
-    private SectionDto sectionDto;
 
     @NotNull
     private Long sectionId;
 
-    private List<BatchDto> batchList;
+//    @NotNull
+//    private Long AgentId;
 
-    public Inbound convert(InboundDto idto, List<Batch> batcList) {
-       Inbound.builder().date(idto.getDate()).batchList(batcList).section()
+    @Valid
+    @NotNull
+    @JsonAlias("batchList")
+    private List<BatchDto> batchDtoList;
+
+    public static Inbound convert(InboundDto idto, List<Batch> batcList, Section s) {
+       Inbound inbound = Inbound.builder().date(idto.getDate()).batchList(batcList).section(s).build();
+       return inbound;
     }
 }
