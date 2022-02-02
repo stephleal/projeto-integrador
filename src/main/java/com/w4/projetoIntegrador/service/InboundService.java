@@ -7,6 +7,7 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,11 +46,7 @@ public class InboundService {
                 Batch batch = BatchDto.convert(batchDto, pa, batchDto.getInitialQuantity());
                 batchList.add(batch);
             }
-            List<InboundRepository.SectionsCapacity> capacitySections = inboundRepository.findCapacityAllSections();
-            Float sectionCurrentVolume = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList()).get(0).getVolume();
-            Float availableSectionVolume = s.getTotalSpace() - sectionCurrentVolume;
-
-            if(inboundVolume > availableSectionVolume) throw new BusinessException("Não há espaço disponível neste setor");
+            checkSectionCapacity(s,inboundVolume);
             Inbound inbound = InboundDto.convert(inboundDto, batchList, s);
             inbound.getBatchList().stream().forEach(batch -> batch.setInbound(inbound));
             inboundRepository.save(inbound);
@@ -98,6 +95,18 @@ public class InboundService {
             String message = "Um produto " + p1 + " não pode ser armazenado em um setor de " + p2;
             throw new BusinessException(message);
         }
+    }
+
+    private void checkSectionCapacity(Section s, Float inboundVolume){
+        List<InboundRepository.SectionsCapacity> capacitySections = inboundRepository.findCapacityAllSections();
+
+        List<InboundRepository.SectionsCapacity> sectionsCapacity = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList());
+        if(sectionsCapacity.size() == 0) return;
+
+        Float sectionCurrentVolume = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList()).get(0).getVolume();
+        Float availableSectionVolume = s.getTotalSpace() - sectionCurrentVolume;
+        if(inboundVolume > availableSectionVolume) throw new BusinessException("Não há espaço disponível neste setor");
+
     }
 
 }
