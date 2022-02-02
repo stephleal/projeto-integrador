@@ -2,6 +2,7 @@ package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
+import com.w4.projetoIntegrador.repository.BatchRepository;
 import com.w4.projetoIntegrador.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
+    @Autowired
+    BatchRepository batchRepository;
     @Autowired
     BuyerService buyerService;
 
@@ -48,6 +51,8 @@ public class CartService {
 
         for (ItemCart itemCart : itemCartList) {
             ProductAnnouncement p = productAnnouncementService.get(itemCart.getProductAnnouncementId());
+            List<BatchRepository.SoldStock> gt = batchRepository.getStock(p.getId());
+            System.out.println(gt.get(0).getStock());
             itemCart.setProductAnnouncement(p);
             BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCart.getQuantity())));
             value = value.add(itemValue);
