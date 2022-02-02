@@ -1,6 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
-import org.hibernate.exception.GenericJDBCException;
+
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;

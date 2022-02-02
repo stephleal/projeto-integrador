@@ -2,16 +2,16 @@ package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.dto.ProductLocationDto;
 import com.w4.projetoIntegrador.entities.Batch;
+import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
-import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
 import com.w4.projetoIntegrador.repository.InboundRepository;
 import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
 import com.w4.projetoIntegrador.repository.ProductRepository;
-
+import com.w4.projetoIntegrador.repository.SectionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,11 @@ public class ProductService {
 
     @Autowired
     InboundRepository inboundRepository;
+
+    @Autowired
+    SectionRepository sectionRepository;
+
+
 
 
     public Product get(Long id) {
@@ -79,16 +84,20 @@ public class ProductService {
         return productListByCategory;
     }
 
-    public List<Batch> getProductLocation(Long id) {
-        System.out.println("Cheguei aqui no service do produto");
+    public ProductLocationDto getProductLocation(Long id) {
         ProductAnnouncement product = productAnnouncementRepository.findById(id).orElse(null);
         
         List<Batch> batchesList = batchRepository.findByProductAnnouncement(product);
         for (Batch batch : batchesList) {
             batch.setProductId(id);
         }
-
-        return batchesList;
+        Inbound foundedInbound =  inboundRepository.getById(id);
+        ProductLocationDto productLocationDto = new ProductLocationDto();
+        productLocationDto.setBatchStock(batchesList);
+        productLocationDto.setProductId(id);
+        productLocationDto.setSection(foundedInbound.getSection());
+        productLocationDto.getSection().setWarehouseId(foundedInbound.getSection().getWarehouse().getId());
+        return productLocationDto;
     }
 }
 
