@@ -1,19 +1,18 @@
-package com.w4.projetoIntegrador.entities;
+package com.w4.projetoIntegrador.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.w4.projetoIntegrador.entities.Batch;
+import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -21,20 +20,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "batches")
-public class Batch {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class BatchDto {
 
     @NotNull
     private Integer initialQuantity;
 
-    @NotNull
-    private Integer stock;
-    
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @NotNull
@@ -46,17 +36,19 @@ public class Batch {
     @NotNull
     private Float currentTemperature;
 
+    @NotNull
     private Long productId;
-//    @NotNull
-//    private ProductTypes type;
 
-    @ManyToOne
-    @JsonIgnore
-    @NotNull
-    private ProductAnnouncement productAnnouncement;
+    public static Batch convert(BatchDto batchDto, ProductAnnouncement pa, Integer stock){
+        Batch batch = Batch.builder()
+                .dueDate(batchDto.getDueDate())
+                .currentTemperature(batchDto.getCurrentTemperature())
+                .manufacturingDateTime(batchDto.getManufacturingDateTime())
+                .productAnnouncement(pa)
+                .stock(stock)
+                .initialQuantity(batchDto.getInitialQuantity())
+                .build();
 
-    @ManyToOne
-    @JsonIgnore
-    @NotNull
-    private Inbound inbound;
+        return batch;
+    }
 }

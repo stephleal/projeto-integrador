@@ -1,12 +1,10 @@
-package com.w4.projetoIntegrador.entities;
+package com.w4.projetoIntegrador.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,20 +15,24 @@ import javax.validation.constraints.Null;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "products")
-public class Product {
+public class ItemCartDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Null
+    @Null
     private Long id;
 
-    @NotNull
-    @NotEmpty
-    private String name;
+    @ManyToOne
+    private ProductAnnouncementDto productAnnouncementDto;
+
+    @JsonIgnore
+    private CartDto cartDto;
 
     @NotNull
-    private ProductTypes productType;
+    private Integer quantity;
+
+    @Transient
+    private Long productAnnouncementId;
+//
+//    @Transient
+//    private Long purchaseOrderId;
 
 }

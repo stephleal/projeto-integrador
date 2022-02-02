@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.service.InboundService;
@@ -23,7 +24,7 @@ public class InboundController {
         }
 
     @PostMapping
-    public ResponseEntity<List<Batch>> cadastra(@Valid @RequestBody Inbound inbound) {
+    public ResponseEntity<List<Batch>> cadastra(@Valid @RequestBody InboundDto inbound) {
     return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 
@@ -33,8 +34,8 @@ public class InboundController {
 //    }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Inbound> putIndound(@Valid @RequestBody Inbound inbound, @PathVariable Long id){
-        return ResponseEntity.status(201).body(inboundService.update(id, inbound));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Inbound> putIndound(@Valid @RequestBody Inbound inbound, @PathVariable Long id){
+//        return ResponseEntity.status(201).body(inboundService.update(id, inbound));
+//    }
 }

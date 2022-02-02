@@ -1,4 +1,4 @@
-package com.w4.projetoIntegrador.entities;
+package com.w4.projetoIntegrador.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.enums.ProductTypes;
@@ -6,31 +6,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "products")
-public class Product {
+public class SectionDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Null
     private Long id;
 
     @NotNull
-    @NotEmpty
-    private String name;
+    private ProductTypes type;
 
     @NotNull
-    private ProductTypes productType;
+    private float totalSpace;
 
+    @JsonIgnore
+    private WarehouseDto warehouseDto;
+
+    @Transient
+    @NotNull
+    private Long warehouseId;
 }
