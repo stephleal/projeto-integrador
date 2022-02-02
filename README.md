@@ -2,9 +2,18 @@
 
 Todo list
 
-US1
-- Corrigir o PUT Inbound - deve sobrescrever os batches
+### US1
 - (Implementar o URI para devolver na response)
+
+
+### US2
+- Put de order
+- Tratamento de erro em caso de produto sem estoque
+
+### US3
+
+### Revisão final
+- Refatorar Classes separando Entities de DTOs
 - (Testes)
 - (Documentação )
 - (Readme.md)
