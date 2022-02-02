@@ -39,8 +39,8 @@ public class InboundDto {
     @JsonAlias("batchList")
     private List<BatchDto> batchDtoList;
 
-    public static Inbound convert(InboundDto idto, List<Batch> batcList, Section s) {
-       Inbound inbound = Inbound.builder().date(idto.getDate()).batchList(batcList).section(s).build();
+    public static Inbound convert(InboundDto idto, List<Batch> batchList, Section s) {
+       Inbound inbound = Inbound.builder().date(idto.getDate()).batchList(batchList).section(s).build();
        return inbound;
     }
 }

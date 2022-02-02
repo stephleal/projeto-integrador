@@ -23,11 +23,11 @@ public class PersistenceExceptionAdvice {
     @Autowired
     private MessageSource messageSource;
 
-    @ExceptionHandler(value = NullPointerException.class)
-    protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
-        String bodyOfResponse = ex.getMessage();
-        return ResponseEntity.internalServerError().body(bodyOfResponse);
-    }
+//    @ExceptionHandler(value = NullPointerException.class)
+//    protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
+//        String bodyOfResponse = ex.getMessage();
+//        return ResponseEntity.internalServerError().body(bodyOfResponse);
+//    }
 
     @ExceptionHandler(value = ArithmeticException.class)
     protected ResponseEntity<Object> erroCalculo(ArithmeticException ex, WebRequest request) {

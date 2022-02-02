@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
 
+import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.entities.ItemCart;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.entities.Cart;
@@ -27,4 +28,10 @@ public class CartController {
     public ResponseEntity<String> createPurchaseOrder (@RequestBody Cart cart) {
         return ResponseEntity.status(201).body(cartService.create(cart));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CartDto> updateCart (@PathVariable Long id, @RequestBody CartDto cartDto){
+        return ResponseEntity.status(201).body(cartService.updateCart(id, cartDto));
+    }
+
 }
