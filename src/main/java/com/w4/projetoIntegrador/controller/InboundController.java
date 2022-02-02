@@ -34,8 +34,8 @@ public class InboundController {
 //    }
 
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Inbound> putIndound(@Valid @RequestBody Inbound inbound, @PathVariable Long id){
-//        return ResponseEntity.status(201).body(inboundService.update(id, inbound));
-//    }
+   @PutMapping("/{id}")
+   public ResponseEntity<InboundDto> putIndound(@Valid @RequestBody InboundDto inbound, @PathVariable Long id){
+       return ResponseEntity.status(201).body(inboundService.update(id, inbound));
+   }
 }

@@ -30,6 +30,9 @@ public class InboundService {
     @Autowired
     private AgentService agentService;
 
+    @Autowired
+    private BatchService batchService;
+
     public List<Batch> create(InboundDto inboundDto) {
         try {
             Section s = sectionService.get(inboundDto.getSectionId());
@@ -65,30 +68,29 @@ public class InboundService {
        }
     }
 
-//    public InboundDto update(Long id, InboundDto inbound){
-//        Inbound foundedInbound = inboundRepository.findById(id).orElse(null);
-//        foundedInbound.setSectionId(inbound.getSectionId());
-//        foundedInbound.setDate(inbound.getDate());
-//        List<Batch> newBatchList = new ArrayList<>();
-//
-//        for (BatchDto payloadBatch:inbound.getBatchList()){
-//            Batch foundedBatch = batchService.get(payloadBatch.getId());
-//            if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
-//            foundedBatch.setInitialQuantity(payloadBatch.getInitialQuantity());
-//            foundedBatch.setType(payloadBatch.getType());
-//            foundedBatch.setProductAnnouncementDto(productAnnouncementService.get(payloadBatch.getProductId()));
-//            Integer sold = foundedBatch.getInitialQuantity() - foundedBatch.getStock();
-//            foundedBatch.setStock(payloadBatch.getInitialQuantity() - sold);
-//            foundedBatch.setManufacturingDateTime(payloadBatch.getManufacturingDateTime());
-//            foundedBatch.setDueDate(payloadBatch.getDueDate());
-//            foundedBatch.setCurrentTemperature(payloadBatch.getCurrentTemperature());
-//            foundedBatch.setInbound(foundedInbound);
-//            newBatchList.add(foundedBatch);
-//        }
-//        foundedInbound.setBatchList(newBatchList);
-//        inboundRepository.save(foundedInbound);
-//        return foundedInbound;
-//    }
+   public InboundDto update(Long id, InboundDto inbound){
+       Inbound foundedInbound = inboundRepository.findById(id).orElse(null);
+       foundedInbound.setSection(sectionService.get(inbound.getSectionId()));
+       foundedInbound.setDate(inbound.getDate());
+       List<Batch> newBatchList = new ArrayList<>();
+
+       for (BatchDto payloadBatch:inbound.getBatchDtoList()){
+           Batch foundedBatch = batchService.get(payloadBatch.getId());
+           if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
+           foundedBatch.setProductAnnouncement(productAnnouncementService.get(payloadBatch.getProductId()));
+           Integer sold = foundedBatch.getInitialQuantity() - foundedBatch.getStock();
+           foundedBatch.setStock(payloadBatch.getInitialQuantity() - sold);
+           foundedBatch.setInitialQuantity(payloadBatch.getInitialQuantity());
+           foundedBatch.setManufacturingDateTime(payloadBatch.getManufacturingDateTime());
+           foundedBatch.setDueDate(payloadBatch.getDueDate());
+           foundedBatch.setCurrentTemperature(payloadBatch.getCurrentTemperature());
+           foundedBatch.setInbound(foundedInbound);
+           newBatchList.add(foundedBatch);
+       }
+       foundedInbound.setBatchList(newBatchList);
+       inboundRepository.save(foundedInbound);
+       return inbound;
+   }
 
     private void checkTypeMatch(ProductTypes p1, ProductTypes p2){
         if (!p1.equals(p2)) {
