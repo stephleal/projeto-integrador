@@ -46,9 +46,8 @@ public class Batch {
     @NotNull
     private Float currentTemperature;
 
+    //TODO usado em product Location refatorar (????)
     private Long productId;
-//    @NotNull
-//    private ProductTypes type;
 
     @ManyToOne
     @JsonIgnore

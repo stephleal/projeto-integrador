@@ -28,7 +28,7 @@ public class Section {
     private ProductTypes type;
 
     @NotNull
-    private float totalSpace;
+    private Float totalSpace;
 
     @ManyToOne
     @JsonIgnore

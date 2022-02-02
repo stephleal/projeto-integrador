@@ -7,11 +7,13 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InboundService {
@@ -26,28 +28,29 @@ public class InboundService {
     private SectionService sectionService;
 
     @Autowired
-    private BatchService batchService;
+    private AgentService agentService;
 
     public List<Batch> create(InboundDto inboundDto) {
         try {
             Section s = sectionService.get(inboundDto.getSectionId());
+            Agent agent = agentService.get(inboundDto.getAgentId());
 
+            if (!agent.getSectionId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
             List<Batch> batchList = new ArrayList<>();
+            Float inboundVolume = 0F;
 
             for (BatchDto batchDto : inboundDto.getBatchDtoList()) {
                 ProductAnnouncement pa = productAnnouncementService.get(batchDto.getProductId());
+                inboundVolume += pa.getVolume() * batchDto.getInitialQuantity();
                 checkTypeMatch(pa.getProduct().getProductType(), s.getType());
                 Batch batch = BatchDto.convert(batchDto, pa, batchDto.getInitialQuantity());
                 batchList.add(batch);
             }
-
+            checkSectionCapacity(s,inboundVolume);
             Inbound inbound = InboundDto.convert(inboundDto, batchList, s);
-
             inbound.getBatchList().stream().forEach(batch -> batch.setInbound(inbound));
-
             inboundRepository.save(inbound);
             return inbound.getBatchList();
-
         }catch (RuntimeException e){
             throw new BusinessException(e.getMessage());
         }
@@ -92,6 +95,18 @@ public class InboundService {
             String message = "Um produto " + p1 + " não pode ser armazenado em um setor de " + p2;
             throw new BusinessException(message);
         }
+    }
+
+    private void checkSectionCapacity(Section s, Float inboundVolume){
+        List<InboundRepository.SectionsCapacity> capacitySections = inboundRepository.findCapacityAllSections();
+
+        List<InboundRepository.SectionsCapacity> sectionsCapacity = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList());
+        if(sectionsCapacity.size() == 0) return;
+
+        Float sectionCurrentVolume = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList()).get(0).getVolume();
+        Float availableSectionVolume = s.getTotalSpace() - sectionCurrentVolume;
+        if(inboundVolume > availableSectionVolume) throw new BusinessException("Não há espaço disponível neste setor");
+
     }
 
 }

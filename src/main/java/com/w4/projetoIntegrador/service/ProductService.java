@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.service;
 
-
 import com.w4.projetoIntegrador.dto.ProductLocationDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
@@ -42,9 +41,6 @@ public class ProductService {
 
     @Autowired
     SectionRepository sectionRepository;
-
-
-
 
     public Product get(Long id) {
         try {
