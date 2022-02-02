@@ -31,8 +31,8 @@ public class InboundDto {
     @NotNull
     private Long sectionId;
 
-//    @NotNull
-//    private Long AgentId;
+    @NotNull
+    private Long agentId;
 
     @Valid
     @NotNull
