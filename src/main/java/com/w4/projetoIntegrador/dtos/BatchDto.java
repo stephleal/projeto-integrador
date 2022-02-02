@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class BatchDto {
+
     private Long id;
 
     @NotNull

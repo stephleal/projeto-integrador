@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.dtos;
 
+import com.w4.projetoIntegrador.entities.ItemCart;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,19 +17,14 @@ import java.util.List;
 @Builder
 public class CartDto {
 
-    private Long id;
-
     @NotNull
     private LocalDate date;
 
-    @Transient
-    //@NotNull
+    @NotNull
     private Long buyerId;
 
     private String statusCode;
 
-    private List<ItemCartDto> itemCartDtos;
-
-    private BuyerDto buyer;
+    private List<ItemCart> products;
 
 }

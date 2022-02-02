@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
@@ -19,8 +20,12 @@ public class CartService {
 
     @Autowired
     BatchRepository batchRepository;
+
     @Autowired
     BuyerService buyerService;
+
+    @Autowired
+    ItemCartService itemCartService;
 
     @Autowired
     ProductAnnouncementService productAnnouncementService;
@@ -65,4 +70,27 @@ public class CartService {
 
         return String.valueOf(value);
     }
+
+    public CartDto updateCart(Long id, CartDto cartDto){
+        Cart cart = cartRepository.findById(id).orElse(null);
+     //   cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
+     //   cart.setDate(cartDto.getDate());
+
+        List<ItemCart> itemCarts = new ArrayList<>();
+
+        for (ItemCart itemCart: cartDto.getProducts()) {
+            ItemCart itemCart1 = itemCartService.getPurchaseProduct(itemCart.getId());
+            itemCart1.setQuantity(itemCart.getQuantity());
+            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCart.getProductAnnouncementId());
+            itemCart1.setProductAnnouncement(productAnnouncement);
+            itemCart1.setCart(cart);
+            itemCarts.add(itemCart1);
+        }
+        cart.setItemCarts(itemCarts);
+        cart.setStatusCode(cartDto.getStatusCode());
+        cartRepository.save(cart);
+
+        return cartDto;
+    }
+
 }
