@@ -45,7 +45,8 @@ public class ProductController {
     }
 
     @GetMapping("/loc")
-    public ResponseEntity<ProductLocationDto> getProductLocation(@RequestParam Long id) {
-        return ResponseEntity.status(200).body(productService.getProductLocation(id));
+    public ResponseEntity<ProductLocationDto> getProductLocation(@RequestParam Long id, @RequestParam(required = false) char orderBy) {
+        return ResponseEntity.status(200).body(productService.orderProductByCategory(id,orderBy));
     }
+
 }
