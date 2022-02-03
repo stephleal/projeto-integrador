@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,12 +96,12 @@ public class ProductService {
 
     public ProductLocationDto getProductLocation(Long id) {
         ProductAnnouncement product = productAnnouncementRepository.findById(id).orElse(null);
-        
+
         List<Batch> batchesList = batchRepository.findByProductAnnouncement(product);
         for (Batch batch : batchesList) {
             batch.setProductId(id);
         }
-        Inbound foundedInbound =  inboundRepository.getById(id);
+        Inbound foundedInbound = inboundRepository.getById(id);
         ProductLocationDto productLocationDto = new ProductLocationDto();
         productLocationDto.setBatchStock(batchesList);
         productLocationDto.setProductId(id);
@@ -107,5 +109,40 @@ public class ProductService {
         productLocationDto.getSection().setWarehouseId(foundedInbound.getSection().getWarehouse().getId());
         return productLocationDto;
     }
+
+    public ProductLocationDto orderProductByCategory(Long id, Character ordenation) {
+        ProductLocationDto productLocationDto = getProductLocation(id);
+
+        List<Batch> batchList;
+
+        switch (ordenation) {
+            case 'L':
+                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> Long.compare(b1.getId(), b2.getId())).collect(Collectors.toList());
+
+                productLocationDto.setBatchStock(batchList);
+
+                return productLocationDto;
+
+            case 'C':
+                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> Integer.compare(b1.getStock(), b2.getStock())).collect(Collectors.toList());
+
+                productLocationDto.setBatchStock(batchList);
+
+                return productLocationDto;
+
+            case 'F':
+                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> String.CASE_INSENSITIVE_ORDER.compare(b1.getDueDate().toString(), b2.getDueDate().toString())).collect(Collectors.toList());
+
+                productLocationDto.setBatchStock(batchList);
+
+                return productLocationDto;
+
+            default:
+                return productLocationDto;
+
+        }
+
+    }
+
 }
 
