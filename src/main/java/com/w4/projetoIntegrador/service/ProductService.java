@@ -9,6 +9,7 @@ import com.w4.projetoIntegrador.dtos.ProductDto;
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.enums.ProductTypes;
+import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
 import com.w4.projetoIntegrador.repository.InboundRepository;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,16 +117,18 @@ public class ProductService {
 
         List<Batch> batchList;
 
+        if (ordenation == null) return productLocationDto;
+
         switch (ordenation) {
             case 'L':
-                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> Long.compare(b1.getId(), b2.getId())).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingLong(Batch::getId)).collect(Collectors.toList());
 
                 productLocationDto.setBatchStock(batchList);
 
                 return productLocationDto;
 
             case 'C':
-                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> Integer.compare(b1.getStock(), b2.getStock())).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingInt(Batch::getStock)).collect(Collectors.toList());
 
                 productLocationDto.setBatchStock(batchList);
 
@@ -138,7 +142,7 @@ public class ProductService {
                 return productLocationDto;
 
             default:
-                return productLocationDto;
+                throw  new BusinessException("Parâmetro inválido");
 
         }
 
