@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,6 @@ public class ItemCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null
     private Long id;
 
     @ManyToOne

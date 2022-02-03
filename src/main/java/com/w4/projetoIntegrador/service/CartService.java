@@ -57,24 +57,21 @@ public class CartService {
         for (ItemCart itemCart : itemCartList) {
             ProductAnnouncement p = productAnnouncementService.get(itemCart.getProductAnnouncementId());
             List<BatchRepository.SoldStock> gt = batchRepository.getStock(p.getId());
-            System.out.println(gt.get(0).getStock());
             itemCart.setProductAnnouncement(p);
             BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCart.getQuantity())));
             value = value.add(itemValue);
             itemCart.setCart(cart);
         }
 
-
         cartRepository.save(cart);
-
 
         return String.valueOf(value);
     }
 
     public CartDto updateCart(Long id, CartDto cartDto){
         Cart cart = cartRepository.findById(id).orElse(null);
-     //   cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
-     //   cart.setDate(cartDto.getDate());
+        cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
+        cart.setDate(cartDto.getDate());
 
         List<ItemCart> itemCarts = new ArrayList<>();
 
@@ -92,5 +89,27 @@ public class CartService {
 
         return cartDto;
     }
+
+//    public Cart updateCart(Long id, Cart cartDto){
+//        Cart cart = cartRepository.findById(id).orElse(null);
+//        cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
+//        cart.setDate(cartDto.getDate());
+//
+//        List<ItemCart> itemCarts = new ArrayList<>();
+//
+//        for (ItemCart itemCart: cartDto.getItemCarts()) {
+//            ItemCart itemCart1 = itemCartService.getPurchaseProduct(itemCart.getId());
+//            itemCart1.setQuantity(itemCart.getQuantity());
+//            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCart.getProductAnnouncementId());
+//            itemCart1.setProductAnnouncement(productAnnouncement);
+//            itemCart1.setCart(cart);
+//            itemCarts.add(itemCart1);
+//        }
+//        cart.setItemCarts(itemCarts);
+//        cart.setStatusCode(cartDto.getStatusCode());
+//        cartRepository.save(cart);
+//
+//        return cartDto;
+//    }
 
 }

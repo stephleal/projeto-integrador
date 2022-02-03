@@ -1,5 +1,7 @@
 package com.w4.projetoIntegrador.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,11 +24,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private LocalDate date;
 
     @Transient
-    //@NotNull
     private Long buyerId;
 
     private String statusCode;
@@ -35,6 +35,7 @@ public class Cart {
     private List<ItemCart> itemCarts;
 
     @ManyToOne
+    @JsonIgnore
     private Buyer buyer;
 
 }
