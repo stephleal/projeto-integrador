@@ -1,10 +1,13 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.ValidDueDateProductsDto;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -26,6 +29,11 @@ public class SectionController {
     public  ResponseEntity<Section> newSection(@Valid @RequestBody Section s) {
 
         return ResponseEntity.status(201).body(sectionService.save(s));
+    }
+
+    @GetMapping("/valid/section/{id}/days/{days}")
+    public ResponseEntity<List<ValidDueDateProductsDto>> getValidDueDateProducts(@PathVariable Long id, @PathVariable Integer days) {
+        return ResponseEntity.status(200).body(sectionService.getValidDueDateProducts(id, days));
     }
 }
 
