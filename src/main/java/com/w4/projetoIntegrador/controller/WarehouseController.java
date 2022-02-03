@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.ProductsByWarehouseDto;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class WarehouseController {
     public ResponseEntity<Warehouse> newWarehouse(@Valid @RequestBody Warehouse wh) {
 
         return ResponseEntity.status(201).body(warehouseService.save(wh));
+    }
+    @GetMapping("/byproducts/{id}")
+    public ProductsByWarehouseDto getWarehouseByProduct(@PathVariable Long id) {
+
+        return warehouseService.getWarehouseStock(id);
     }
 }
 
