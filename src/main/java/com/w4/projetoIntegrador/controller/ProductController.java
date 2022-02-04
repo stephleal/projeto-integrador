@@ -4,7 +4,6 @@ package com.w4.projetoIntegrador.controller;
 import com.w4.projetoIntegrador.dto.ProductLocationDto;
 
 import com.w4.projetoIntegrador.dtos.ProductDto;
-
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.service.ProductService;
@@ -48,5 +47,6 @@ public class ProductController {
     public ResponseEntity<ProductLocationDto> getProductLocation(@RequestParam Long id, @RequestParam(required = false) Character orderBy) {
         return ResponseEntity.status(200).body(productService.orderProductByCategory(id,orderBy));
     }
+
 
 }

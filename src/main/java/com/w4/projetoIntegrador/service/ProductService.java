@@ -3,7 +3,7 @@ package com.w4.projetoIntegrador.service;
 import com.w4.projetoIntegrador.dto.ProductLocationDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
-
+import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ProductDto;
 
 import com.w4.projetoIntegrador.entities.Product;
@@ -147,6 +147,7 @@ public class ProductService {
         }
 
     }
+
 
 }
 
