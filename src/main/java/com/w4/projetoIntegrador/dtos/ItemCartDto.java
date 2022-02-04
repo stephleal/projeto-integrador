@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.w4.projetoIntegrador.entities.ItemCart;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,19 +17,16 @@ import javax.validation.constraints.Null;
 @Builder
 public class ItemCartDto {
 
-    @Null
-    private Long id;
-
-    @ManyToOne
-    private ProductAnnouncementDto productAnnouncementDto;
-
-    @JsonIgnore
-    private CartDto cartDto;
-
     @NotNull
     private Integer quantity;
 
-    @Transient
+    @NotNull
     private Long productAnnouncementId;
 
+    public static ItemCartDto convert(ItemCart itemCart){
+        return ItemCartDto.builder()
+                .quantity(itemCart.getQuantity())
+                .productAnnouncementId(itemCart.getProductAnnouncement().getId())
+                .build();
+    }
 }

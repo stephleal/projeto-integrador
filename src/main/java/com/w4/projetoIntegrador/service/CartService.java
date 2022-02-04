@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.dtos.CartDto;
+import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
@@ -30,16 +31,23 @@ public class CartService {
     @Autowired
     ProductAnnouncementService productAnnouncementService;
 
-    public List<ItemCart> getCart(Long id) {
+    public CartDto get(Long id){
+        CartDto cartDto = CartDto.convert(getCart(id));
+        cartDto.setTotalPrice(getTotalPrice(cartDto.getProducts()));
+        return cartDto;
+    }
+
+    public Cart getCart(Long id) {
 
         try {
-            List<ItemCart> itemCarts = cartRepository.findById(id).orElse(new Cart()).getItemCarts();
+//            List<ItemCart> itemCarts = cartRepository.findById(id).orElse(new Cart()).getItemCarts();
+            Cart cart = cartRepository.findById(id).orElse(new Cart());
 
             List<ProductAnnouncement> productAnnouncements = new ArrayList<ProductAnnouncement>();
-            for (ItemCart p : itemCarts) {
+            for (ItemCart p : cart.getItemCarts()) {
                 productAnnouncements.add(p.getProductAnnouncement());
             }
-            return itemCarts;
+            return cart;
         } catch (RuntimeException e) {
             throw new NotFoundException("Product " + id + " não encontrado na base de dados.");
         }
@@ -68,6 +76,18 @@ public class CartService {
         return String.valueOf(value);
     }
 
+    private BigDecimal getTotalPrice(List<ItemCartDto>  itemCartListDto){
+
+        BigDecimal value = new BigDecimal(0);
+        for (ItemCartDto itemCartDto : itemCartListDto) {
+           ProductAnnouncement p = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
+            BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCartDto.getQuantity())));
+            value = value.add(itemValue);
+        }
+        return value;
+    }
+
+
     public CartDto updateCart(Long id, CartDto cartDto){
         Cart cart = cartRepository.findById(id).orElse(null);
         cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
@@ -75,14 +95,14 @@ public class CartService {
 
         List<ItemCart> itemCarts = new ArrayList<>();
 
-        for (ItemCart itemCart: cartDto.getProducts()) {
-            ItemCart itemCart1 = itemCartService.getPurchaseProduct(itemCart.getId());
-            itemCart1.setQuantity(itemCart.getQuantity());
-            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCart.getProductAnnouncementId());
-            itemCart1.setProductAnnouncement(productAnnouncement);
-            itemCart1.setCart(cart);
-            itemCarts.add(itemCart1);
-        }
+//        for (ItemCart itemCart: cartDto.getProducts()) {
+//            ItemCart itemCart1 = itemCartService.getPurchaseProduct(itemCart.getId());
+//            itemCart1.setQuantity(itemCart.getQuantity());
+//            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCart.getProductAnnouncementId());
+//            itemCart1.setProductAnnouncement(productAnnouncement);
+//            itemCart1.setCart(cart);
+//            itemCarts.add(itemCart1);
+//        }
         cart.setItemCarts(itemCarts);
         cart.setStatusCode(cartDto.getStatusCode());
         cartRepository.save(cart);

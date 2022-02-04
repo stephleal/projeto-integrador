@@ -18,12 +18,12 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/{id}")
-    public List<ItemCart> getPurchaseOrder(@PathVariable Long id){
-        return cartService.getCart(id);
+    public ResponseEntity<CartDto> getCart(@PathVariable Long id){
+        return ResponseEntity.ok().body(cartService.get(id));
     }
 
     @PostMapping()
-    public ResponseEntity<String> createPurchaseOrder (@RequestBody Cart cart) {
+    public ResponseEntity<String> createCart (@RequestBody Cart cart) {
         return ResponseEntity.status(201).body(cartService.create(cart));
     }
 
