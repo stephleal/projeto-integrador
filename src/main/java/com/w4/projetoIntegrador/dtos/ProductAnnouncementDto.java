@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 @Builder
 public class ProductAnnouncementDto {
 
-    //@Null
     private Long id;
 
     @NotNull

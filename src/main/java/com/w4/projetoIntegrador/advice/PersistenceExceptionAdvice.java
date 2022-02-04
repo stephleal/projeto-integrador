@@ -23,11 +23,11 @@ public class PersistenceExceptionAdvice {
     @Autowired
     private MessageSource messageSource;
 
-//    @ExceptionHandler(value = NullPointerException.class)
-//    protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
-//        String bodyOfResponse = ex.getMessage();
-//        return ResponseEntity.internalServerError().body(bodyOfResponse);
-//    }
+    @ExceptionHandler(value = NullPointerException.class)
+    protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return ResponseEntity.internalServerError().body(bodyOfResponse);
+    }
 
     @ExceptionHandler(value = ArithmeticException.class)
     protected ResponseEntity<Object> erroCalculo(ArithmeticException ex, WebRequest request) {
@@ -38,7 +38,7 @@ public class PersistenceExceptionAdvice {
     @ExceptionHandler(value = BusinessException.class)
     protected ResponseEntity<Object> businessException(BusinessException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
-        return ResponseEntity.status(400).body(bodyOfResponse);
+        return ResponseEntity.badRequest().body(bodyOfResponse);
     }
 
     @ExceptionHandler(value = NotFoundException.class)
@@ -58,5 +58,4 @@ public class PersistenceExceptionAdvice {
         });
         return errors;
     }
-
 }

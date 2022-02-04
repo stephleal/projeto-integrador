@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.AgentDto;
 import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.entities.*;
@@ -7,7 +8,6 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +36,9 @@ public class InboundService {
     public List<Batch> create(InboundDto inboundDto) {
         try {
             Section s = sectionService.get(inboundDto.getSectionId());
-            Agent agent = agentService.get(inboundDto.getAgentId());
+            AgentDto agentDto = agentService.get(inboundDto.getAgentId());
 
-            if (!agent.getSectionId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
+            if (!agentDto.getSectionId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
             List<Batch> batchList = new ArrayList<>();
             Float inboundVolume = 0F;
 
@@ -75,7 +75,7 @@ public class InboundService {
        List<Batch> newBatchList = new ArrayList<>();
 
        for (BatchDto payloadBatch:inbound.getBatchDtoList()){
-           Batch foundedBatch = batchService.get(payloadBatch.getId());
+           Batch foundedBatch = batchService.getBatch(payloadBatch.getId());
            if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
            foundedBatch.setProductAnnouncement(productAnnouncementService.get(payloadBatch.getProductId()));
            Integer sold = foundedBatch.getInitialQuantity() - foundedBatch.getStock();
@@ -108,7 +108,5 @@ public class InboundService {
         Float sectionCurrentVolume = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList()).get(0).getVolume();
         Float availableSectionVolume = s.getTotalSpace() - sectionCurrentVolume;
         if(inboundVolume > availableSectionVolume) throw new BusinessException("Não há espaço disponível neste setor");
-
     }
-
 }

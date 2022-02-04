@@ -1,7 +1,6 @@
 package com.w4.projetoIntegrador.dtos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.entities.Section;
@@ -10,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

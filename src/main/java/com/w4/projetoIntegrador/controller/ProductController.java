@@ -1,7 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
-
-import com.w4.projetoIntegrador.dto.ProductLocationDto;
+import com.w4.projetoIntegrador.dtos.ProductLocationDto;
 
 import com.w4.projetoIntegrador.dtos.ProductDto;
 import com.w4.projetoIntegrador.entities.Product;
@@ -27,8 +26,6 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<Product> newProduct(@Valid @RequestBody ProductDto p){
-
-//        ProductTypes.valueOf("refrigerado");
         return ResponseEntity.status(201).body(productService.save(p));
     }
 
@@ -46,6 +43,4 @@ public class ProductController {
     public ResponseEntity<ProductLocationDto> getProductLocation(@RequestParam Long id, @RequestParam(required = false) Character orderBy) {
         return ResponseEntity.status(200).body(productService.orderProductByCategory(id,orderBy));
     }
-
-
 }

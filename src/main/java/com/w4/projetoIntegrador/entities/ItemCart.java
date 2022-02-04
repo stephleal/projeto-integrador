@@ -36,8 +36,5 @@ public class ItemCart {
 
     @Transient
     private Long productAnnouncementId;
-//
-//    @Transient
-//    private Long purchaseOrderId;
 
 }

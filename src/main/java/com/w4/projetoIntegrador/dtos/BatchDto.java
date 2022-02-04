@@ -53,4 +53,15 @@ public class BatchDto {
 
         return batch;
     }
+
+    public static BatchDto convert(Batch batch){
+        return BatchDto.builder()
+                .id(batch.getId())
+                .initialQuantity(batch.getInitialQuantity())
+                .manufacturingDateTime(batch.getManufacturingDateTime())
+                .dueDate(batch.getDueDate())
+                .currentTemperature(batch.getCurrentTemperature())
+                .productId(batch.getProductAnnouncement().getId())
+                .build();
+    }
 }

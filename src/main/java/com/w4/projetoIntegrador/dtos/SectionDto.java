@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class SectionDto {
 
-    //@Null
     private Long id;
 
     @NotNull

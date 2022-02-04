@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,6 +23,4 @@ public class Buyer {
 
     private String name;
 
-//    @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private List<Cart> cart;
 }

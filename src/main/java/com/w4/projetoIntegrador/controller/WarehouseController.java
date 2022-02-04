@@ -18,18 +18,15 @@ public class WarehouseController {
 
     @GetMapping("/{id}")
     public Warehouse getWarehouse(@PathVariable Long id) {
-
         return warehouseService.get(id);
     }
 
     @PostMapping()
     public ResponseEntity<Warehouse> newWarehouse(@Valid @RequestBody Warehouse wh) {
-
         return ResponseEntity.status(201).body(warehouseService.save(wh));
     }
     @GetMapping("/byproducts/{id}")
     public ProductsByWarehouseDto getWarehouseByProduct(@PathVariable Long id) {
-
         return warehouseService.getWarehouseStock(id);
     }
 }

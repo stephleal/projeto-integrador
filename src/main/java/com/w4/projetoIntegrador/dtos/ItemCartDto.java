@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,8 +30,5 @@ public class ItemCartDto {
 
     @Transient
     private Long productAnnouncementId;
-//
-//    @Transient
-//    private Long purchaseOrderId;
 
 }

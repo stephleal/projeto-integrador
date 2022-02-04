@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.Null;
 
 @Data
@@ -13,7 +12,6 @@ import javax.validation.constraints.Null;
 @AllArgsConstructor
 @Builder
 public class BuyerDto {
-
 
     @Null
     private Long id;

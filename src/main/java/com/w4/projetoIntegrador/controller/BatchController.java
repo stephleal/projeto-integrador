@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.service.BatchService;
 
@@ -20,17 +21,11 @@ public class BatchController {
 
     @Autowired
     private BatchService batchService;
-
-
     
     @GetMapping("/{id}")
-    public Batch getBatch(@PathVariable Long id){
-        return batchService.get(id);
-    }
+    public ResponseEntity<BatchDto> getBatch(@PathVariable Long id){
 
-    @PostMapping()
-    public ResponseEntity<Batch> newBatch(@Valid @RequestBody Batch batch) {
-        return ResponseEntity.status(201).body(batchService.save(batch));
+        return ResponseEntity.ok().body(batchService.get(id));
     }
 
 }

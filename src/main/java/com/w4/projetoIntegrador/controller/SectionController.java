@@ -40,6 +40,5 @@ public class SectionController {
     public ResponseEntity<List<ValidDueDateProductsDto>> getValidDueDateProductsByCategory(@PathVariable String category, @PathVariable Integer days, @RequestParam String orderBy) {
         return ResponseEntity.status(200).body(sectionService.getValidDueDateProductsByCategory(category, days, orderBy));
     }
-
 }
 
