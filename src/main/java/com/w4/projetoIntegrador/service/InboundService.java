@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.service;
 
-import com.w4.projetoIntegrador.dtos.AgentDto;
 import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.InboundDto;
 import com.w4.projetoIntegrador.entities.*;
@@ -33,12 +32,12 @@ public class InboundService {
     @Autowired
     private BatchService batchService;
 
-    public List<Batch> create(InboundDto inboundDto) {
+    public InboundDto create(InboundDto inboundDto) {
         try {
             Section s = sectionService.get(inboundDto.getSectionId());
-            AgentDto agentDto = agentService.get(inboundDto.getAgentId());
+            Agent agent = agentService.getAgent(inboundDto.getAgentId());
 
-            if (!agentDto.getSectionId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
+            if (!agent.getSection().getId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
             List<Batch> batchList = new ArrayList<>();
             Float inboundVolume = 0F;
 
@@ -51,18 +50,20 @@ public class InboundService {
             }
             checkSectionCapacity(s,inboundVolume);
             Inbound inbound = InboundDto.convert(inboundDto, batchList, s);
+            inbound.setAgent(agent);
             inbound.getBatchList().stream().forEach(batch -> batch.setInbound(inbound));
             inboundRepository.save(inbound);
-            return inbound.getBatchList();
+
+            return InboundDto.convert(inbound);
         }catch (RuntimeException e){
             throw new BusinessException(e.getMessage());
         }
     }
 
-    public Inbound get(Long id){
+    public InboundDto get(Long id){
        try {
         Inbound inbound = inboundRepository.findById(id).orElse(null);
-        return inbound;
+        return InboundDto.convert(inbound);
        } catch (RuntimeException e) {
            throw new NotFoundException("Inbound order " + id + " não encontrado na base de dados.");
        }

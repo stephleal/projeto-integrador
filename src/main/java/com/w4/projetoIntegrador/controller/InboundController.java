@@ -19,12 +19,12 @@ public class InboundController {
     InboundService inboundService;
 
     @GetMapping("/{id}")
-    public Inbound getInbound(@PathVariable Long id) {
-        return inboundService.get(id);
+    public ResponseEntity<InboundDto> getInbound(@PathVariable Long id) {
+        return ResponseEntity.ok().body(inboundService.get(id));
         }
 
     @PostMapping
-    public ResponseEntity<List<Batch>> cadastra(@Valid @RequestBody InboundDto inbound) {
+    public ResponseEntity<InboundDto> cadastra(@Valid @RequestBody InboundDto inbound) {
     return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 

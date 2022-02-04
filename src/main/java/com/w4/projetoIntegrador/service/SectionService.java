@@ -37,7 +37,7 @@ public class SectionService {
         }
 
         public Section save(Section section) {
-           Warehouse w = warehouseService.get(section.getWarehouseId());
+           Warehouse w = warehouseService.getWarehouse(section.getWarehouse().getId());
            section.setWarehouse(w);
            return sectionRepository.save(section);
         }

@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.dtos;
 
+import com.w4.projetoIntegrador.entities.Warehouse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +16,17 @@ import javax.validation.constraints.Null;
 @Builder
 public class WarehouseDto {
 
-    @Null
     private Long id;
 
     @NotNull
     @NotEmpty
     private String name;
+
+    public static WarehouseDto convert(Warehouse warehouse) {
+        return WarehouseDto.builder().id(warehouse.getId()).name(warehouse.getName()).build();
+    }
+
+    public static Warehouse convert(WarehouseDto warehouseDto){
+        return Warehouse.builder().name(warehouseDto.getName()).build();
+    }
 }

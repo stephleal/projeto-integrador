@@ -29,6 +29,9 @@ public class Inbound {
     @NotNull
     private Section section;
 
+    @ManyToOne
+    private Agent agent;
+
     @OneToMany(mappedBy = "inbound", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @NotNull
     private List<Batch> batchList;

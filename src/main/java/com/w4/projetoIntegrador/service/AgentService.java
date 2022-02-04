@@ -17,13 +17,17 @@ public class AgentService {
     @Autowired
     SectionService sectionService;
 
-    public AgentDto get(Long id) {
+    public Agent getAgent(Long id){
         try {
-            return AgentDto.convert(agentRepository.findById(id).orElse(null));
+            return agentRepository.findById(id).orElse(null);
 
         } catch (RuntimeException e) {
             throw new NotFoundException("Agent " + id + " não encontrado na base de dados.");
         }
+    }
+
+    public AgentDto get(Long id) {
+        return AgentDto.convert(getAgent(id));
     }
 
     public AgentDto save(AgentDto agentDto) {
