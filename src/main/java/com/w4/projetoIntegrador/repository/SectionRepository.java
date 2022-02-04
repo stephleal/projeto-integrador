@@ -26,17 +26,19 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
         Integer getQuantity();
     }
 
-    @Query(value = "select batches.id as batchNumber, batches.product_announcement_id as productId, "
-    +  "batches.type as productTypeId, batches.due_date as dueDate, batches.stock as quantity, "
-    + "sections.id as sectionId  from batches, sections, inbounds where inbounds.section_id = sections.id and "
-    + "batches.inbound_id = inbounds.id and batches.type = :productTypeId order by dueDate ASC ", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT batches.id as batchNumber, batches.product_announcement_id as productId, "
+            + "products.product_type as productTypeId, batches.due_date as dueDate, batches.stock as quantity, "
+            + "sections.id as sectionId  FROM batches, sections, inbounds, products "
+            + "WHERE inbounds.section_id = sections.id AND batches.inbound_id = inbounds.id AND products.product_type = :productTypeId "
+            + "ORDER BY dueDate ASC", nativeQuery = true)
     List<ValidDueDateProductsByCategory> findValidDueDateProductsByCategoryAsc(Integer productTypeId);
 
 
-    @Query(value = "select batches.id as batchNumber, batches.product_announcement_id as productId, "
-    +  "batches.type as productTypeId, batches.due_date as dueDate, batches.stock as quantity, "
-    + "sections.id as sectionId  from batches, sections, inbounds where inbounds.section_id = sections.id and "
-    + "batches.inbound_id = inbounds.id and batches.type = :productTypeId order by dueDate DESC ", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT batches.id as batchNumber, batches.product_announcement_id as productId, "
+            + "products.product_type as productTypeId, batches.due_date as dueDate, batches.stock as quantity, "
+            + "sections.id as sectionId  FROM batches, sections, inbounds, products "
+            + "WHERE inbounds.section_id = sections.id AND batches.inbound_id = inbounds.id AND products.product_type = :productTypeId "
+            + "ORDER BY dueDate DESC", nativeQuery = true)
     List<ValidDueDateProductsByCategory> findValidDueDateProductsByCategoryDesc(Integer productTypeId);
 
     public interface ValidDueDateProductsByCategory{
