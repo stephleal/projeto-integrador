@@ -42,7 +42,7 @@ public class InboundService {
             Float inboundVolume = 0F;
 
             for (BatchDto batchDto : inboundDto.getBatchDtoList()) {
-                ProductAnnouncement pa = productAnnouncementService.get(batchDto.getProductId());
+                ProductAnnouncement pa = productAnnouncementService.getProductAnnouncement(batchDto.getProductId());
                 inboundVolume += pa.getVolume() * batchDto.getInitialQuantity();
                 checkTypeMatch(pa.getProduct().getProductType(), s.getType());
                 Batch batch = BatchDto.convert(batchDto, pa, batchDto.getInitialQuantity());
@@ -78,7 +78,7 @@ public class InboundService {
        for (BatchDto payloadBatch:inbound.getBatchDtoList()){
            Batch foundedBatch = batchService.getBatch(payloadBatch.getId());
            if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
-           foundedBatch.setProductAnnouncement(productAnnouncementService.get(payloadBatch.getProductId()));
+           foundedBatch.setProductAnnouncement(productAnnouncementService.getProductAnnouncement(payloadBatch.getProductId()));
            Integer sold = foundedBatch.getInitialQuantity() - foundedBatch.getStock();
            foundedBatch.setStock(payloadBatch.getInitialQuantity() - sold);
            foundedBatch.setInitialQuantity(payloadBatch.getInitialQuantity());

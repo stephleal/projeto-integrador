@@ -62,7 +62,7 @@ public class CartService {
         List<ItemCart> itemCartList = new ArrayList<>();
 
         for (ItemCartDto itemCartDto : cartDto.getProducts()) {
-            ProductAnnouncement p = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
+            ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(itemCartDto.getProductAnnouncementId());
             itemCartList.add(ItemCartDto.convert(itemCartDto, p, cart));
         }
         cart.setItemCarts(itemCartList);
@@ -83,7 +83,7 @@ public class CartService {
         for (ItemCartDto itemCartDto : cartDto.getProducts()) {
             ItemCart itemCart = itemCartService.getPurchaseProduct(itemCartDto.getId());
             itemCart.setQuantity(itemCartDto.getQuantity());
-            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
+            ProductAnnouncement productAnnouncement = productAnnouncementService.getProductAnnouncement(itemCartDto.getProductAnnouncementId());
             itemCart.setProductAnnouncement(productAnnouncement);
             itemCart.setCart(cart);
             itemCarts.add(itemCart);
@@ -99,7 +99,7 @@ public class CartService {
 
         BigDecimal value = new BigDecimal(0);
         for (ItemCart itemCart : itemCartList) {
-            ProductAnnouncement p = productAnnouncementService.get(itemCart.getProductAnnouncement().getId());
+            ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(itemCart.getProductAnnouncement().getId());
             BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCart.getQuantity())));
             value = value.add(itemValue);
         }
