@@ -76,14 +76,6 @@ public class ProductService {
 
         List<Product> productListByCategory = getProductList();
 
-//        productListByCategory = productListByCategory
-//                .stream()
-//                .filter(product -> ProductTypes
-//                        .values()[Integer.parseInt(product.getProductType())]
-//                        .equals(ProductTypes.valueOf(category)))
-//                .collect(Collectors.toList());
-
-
         productListByCategory = productListByCategory
                 .stream()
                 .filter(product -> product.equals(ProductTypes.valueOf(category)))
