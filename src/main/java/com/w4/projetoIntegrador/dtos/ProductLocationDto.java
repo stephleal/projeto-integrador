@@ -1,4 +1,4 @@
-package com.w4.projetoIntegrador.dto;
+package com.w4.projetoIntegrador.dtos;
 
 import java.util.List;
 

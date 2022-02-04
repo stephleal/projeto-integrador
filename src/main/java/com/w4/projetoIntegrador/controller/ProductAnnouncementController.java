@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.ProductAnnouncementDto;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.service.ProductAnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ public class ProductAnnouncementController {
     ProductAnnouncementService productAnnouncementService;
 
     @GetMapping("/{id}")
-    public ProductAnnouncement getProduct(@PathVariable Long id){
-        return productAnnouncementService.get(id);
+    public ResponseEntity<ProductAnnouncementDto> getProduct(@PathVariable Long id){
+        return ResponseEntity.ok().body(productAnnouncementService.get(id));
     }
 
     @PostMapping()
-    public ResponseEntity<ProductAnnouncement> newProduct(@Valid @RequestBody ProductAnnouncement p){
+    public ResponseEntity<ProductAnnouncementDto> newProduct(@Valid @RequestBody ProductAnnouncement p){
         return ResponseEntity.status(201).body(productAnnouncementService.save(p));
     }
 }

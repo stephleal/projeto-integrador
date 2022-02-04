@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 
 @Data
@@ -22,7 +21,6 @@ public class ProductAnnouncement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Null
     private Long id;
 
     @NotNull

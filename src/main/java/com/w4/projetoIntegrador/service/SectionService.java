@@ -1,11 +1,9 @@
 package com.w4.projetoIntegrador.service;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ValidDueDateProductsDto;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.entities.Warehouse;
@@ -18,7 +16,6 @@ import com.w4.projetoIntegrador.repository.SectionRepository.ValidDueDateProduct
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class SectionService {
@@ -40,7 +37,7 @@ public class SectionService {
         }
 
         public Section save(Section section) {
-           Warehouse w = warehouseService.get(section.getWarehouseId());
+           Warehouse w = warehouseService.getWarehouse(section.getWarehouse().getId());
            section.setWarehouse(w);
            return sectionRepository.save(section);
         }
@@ -63,8 +60,6 @@ public class SectionService {
             }
             return validDueDateList;
         }
-
-
 
         public List<ValidDueDateProductsDto> getValidDueDateProductsByCategory(String type, Integer days, String orderBy) {
 

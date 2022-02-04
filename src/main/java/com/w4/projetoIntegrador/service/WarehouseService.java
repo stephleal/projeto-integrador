@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.dtos.ProductsByWarehouseDto;
+import com.w4.projetoIntegrador.dtos.WarehouseDto;
 import com.w4.projetoIntegrador.dtos.WarehouseStockDto;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
@@ -17,7 +18,7 @@ public class WarehouseService {
     @Autowired
     WarehouseRepository warehouseRepository;
 
-    public Warehouse get(Long id) {
+    public Warehouse getWarehouse(Long id){
         try {
             return warehouseRepository.findById(id).orElse(null);
         } catch (RuntimeException e) {
@@ -25,8 +26,12 @@ public class WarehouseService {
         }
     }
 
-    public Warehouse save(Warehouse wh) {
-        return warehouseRepository.save(wh);
+    public WarehouseDto get(Long id) {
+        return WarehouseDto.convert(getWarehouse(id));
+    }
+
+    public WarehouseDto save(Warehouse wh) {
+        return WarehouseDto.convert(warehouseRepository.save(wh));
     }
 
     public ProductsByWarehouseDto getWarehouseStock(Long id){

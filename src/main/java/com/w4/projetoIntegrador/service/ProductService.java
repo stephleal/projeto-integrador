@@ -1,9 +1,8 @@
 package com.w4.projetoIntegrador.service;
 
-import com.w4.projetoIntegrador.dto.ProductLocationDto;
+import com.w4.projetoIntegrador.dtos.ProductLocationDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
-import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ProductDto;
 
 import com.w4.projetoIntegrador.entities.Product;
@@ -20,10 +19,7 @@ import com.w4.projetoIntegrador.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,9 +133,5 @@ public class ProductService {
                 throw  new BusinessException("Parâmetro inválido");
 
         }
-
     }
-
-
 }
-

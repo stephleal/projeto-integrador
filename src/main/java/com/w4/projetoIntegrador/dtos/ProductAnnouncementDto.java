@@ -1,6 +1,9 @@
 package com.w4.projetoIntegrador.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.w4.projetoIntegrador.entities.Product;
+import com.w4.projetoIntegrador.entities.ProductAnnouncement;
+import com.w4.projetoIntegrador.entities.Seller;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +20,6 @@ import java.math.BigDecimal;
 @Builder
 public class ProductAnnouncementDto {
 
-    //@Null
     private Long id;
 
     @NotNull
@@ -40,17 +42,36 @@ public class ProductAnnouncementDto {
     @NotNull
     private Float maximumTemperature;
 
-    @JsonIgnore
-    private ProductDto productDto;
-
-    @JsonIgnore
-    private SellerDto sellerDto;
-
-    @Transient
     @NotNull
     private Long productId;
 
-    @Transient
     @NotNull
     private Long sellerId;
+
+    public static ProductAnnouncementDto convert(ProductAnnouncement pa){
+        return ProductAnnouncementDto.builder()
+                .id(pa.getId())
+                .name(pa.getName())
+                .brand(pa.getBrand())
+                .price(pa.getPrice())
+                .volume(pa.getVolume())
+                .minimumTemperature(pa.getMinimumTemperature())
+                .maximumTemperature(pa.getMaximumTemperature())
+                .productId(pa.getProduct().getId())
+                .sellerId(pa.getSeller().getId())
+                .build();
+    }
+
+    public static ProductAnnouncement convert(ProductAnnouncementDto paDto, Seller seller, Product product){
+        return ProductAnnouncement.builder()
+                .name(paDto.getName())
+                .brand(paDto.getBrand())
+                .price(paDto.getPrice())
+                .volume(paDto.getVolume())
+                .minimumTemperature(paDto.getMinimumTemperature())
+                .maximumTemperature(paDto.getMaximumTemperature())
+                .product(product)
+                .seller(seller)
+                .build();
+    }
 }

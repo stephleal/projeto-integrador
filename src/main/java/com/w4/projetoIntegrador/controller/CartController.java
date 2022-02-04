@@ -1,9 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
-
 import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.entities.ItemCart;
-import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.entities.Cart;
 import com.w4.projetoIntegrador.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +18,13 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/{id}")
-    public List<ItemCart> getPurchaseOrder(@PathVariable Long id){
-        return cartService.getCart(id);
+    public ResponseEntity<CartDto> getCart(@PathVariable Long id){
+        return ResponseEntity.ok().body(cartService.get(id));
     }
 
     @PostMapping()
-    public ResponseEntity<String> createPurchaseOrder (@RequestBody Cart cart) {
-        return ResponseEntity.status(201).body(cartService.create(cart));
+    public ResponseEntity<CartDto> createCart (@RequestBody CartDto cartDto) {
+        return ResponseEntity.status(201).body(cartService.create(cartDto));
     }
 
     @PutMapping("/{id}")
@@ -34,5 +32,4 @@ public class CartController {
 
         return ResponseEntity.status(201).body(cartService.updateCart(id, cartDto));
     }
-
 }

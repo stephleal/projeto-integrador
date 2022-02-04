@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.BuyerDto;
 import com.w4.projetoIntegrador.entities.Buyer;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BuyerRepository;
@@ -12,6 +13,10 @@ public class BuyerService {
     @Autowired
     BuyerRepository buyerRepository;
 
+    public BuyerDto get(Long id){
+        return BuyerDto.convert(getBuyer(id));
+    }
+
     public Buyer getBuyer(Long id) {
         try {
             return buyerRepository.findById(id).orElse(null);
@@ -20,8 +25,9 @@ public class BuyerService {
         }
     }
 
-    public Buyer create(Buyer buyer) {
-
-        return buyerRepository.save(buyer);
+    public BuyerDto create(BuyerDto buyerDto) {
+        Buyer buyer = buyerRepository.save(BuyerDto.convert(buyerDto));
+        buyerDto.setId(buyer.getId());
+        return buyerDto;
     }
 }

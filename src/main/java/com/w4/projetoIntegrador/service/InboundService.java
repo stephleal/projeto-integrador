@@ -7,7 +7,6 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +32,17 @@ public class InboundService {
     @Autowired
     private BatchService batchService;
 
-    public List<Batch> create(InboundDto inboundDto) {
+    public InboundDto create(InboundDto inboundDto) {
         try {
             Section s = sectionService.get(inboundDto.getSectionId());
-            Agent agent = agentService.get(inboundDto.getAgentId());
+            Agent agent = agentService.getAgent(inboundDto.getAgentId());
 
-            if (!agent.getSectionId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
+            if (!agent.getSection().getId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
             List<Batch> batchList = new ArrayList<>();
             Float inboundVolume = 0F;
 
             for (BatchDto batchDto : inboundDto.getBatchDtoList()) {
-                ProductAnnouncement pa = productAnnouncementService.get(batchDto.getProductId());
+                ProductAnnouncement pa = productAnnouncementService.getProductAnnouncement(batchDto.getProductId());
                 inboundVolume += pa.getVolume() * batchDto.getInitialQuantity();
                 checkTypeMatch(pa.getProduct().getProductType(), s.getType());
                 Batch batch = BatchDto.convert(batchDto, pa, batchDto.getInitialQuantity());
@@ -51,18 +50,20 @@ public class InboundService {
             }
             checkSectionCapacity(s,inboundVolume);
             Inbound inbound = InboundDto.convert(inboundDto, batchList, s);
+            inbound.setAgent(agent);
             inbound.getBatchList().stream().forEach(batch -> batch.setInbound(inbound));
             inboundRepository.save(inbound);
-            return inbound.getBatchList();
+
+            return InboundDto.convert(inbound);
         }catch (RuntimeException e){
             throw new BusinessException(e.getMessage());
         }
     }
 
-    public Inbound get(Long id){
+    public InboundDto get(Long id){
        try {
         Inbound inbound = inboundRepository.findById(id).orElse(null);
-        return inbound;
+        return InboundDto.convert(inbound);
        } catch (RuntimeException e) {
            throw new NotFoundException("Inbound order " + id + " não encontrado na base de dados.");
        }
@@ -75,9 +76,9 @@ public class InboundService {
        List<Batch> newBatchList = new ArrayList<>();
 
        for (BatchDto payloadBatch:inbound.getBatchDtoList()){
-           Batch foundedBatch = batchService.get(payloadBatch.getId());
+           Batch foundedBatch = batchService.getBatch(payloadBatch.getId());
            if (foundedBatch.getInbound().getId() != id) throw new BusinessException("Id de batch não corresponde ao inbound");
-           foundedBatch.setProductAnnouncement(productAnnouncementService.get(payloadBatch.getProductId()));
+           foundedBatch.setProductAnnouncement(productAnnouncementService.getProductAnnouncement(payloadBatch.getProductId()));
            Integer sold = foundedBatch.getInitialQuantity() - foundedBatch.getStock();
            foundedBatch.setStock(payloadBatch.getInitialQuantity() - sold);
            foundedBatch.setInitialQuantity(payloadBatch.getInitialQuantity());
@@ -108,7 +109,5 @@ public class InboundService {
         Float sectionCurrentVolume = capacitySections.stream().filter(cap -> cap.getId().equals(s.getId())).collect(Collectors.toList()).get(0).getVolume();
         Float availableSectionVolume = s.getTotalSpace() - sectionCurrentVolume;
         if(inboundVolume > availableSectionVolume) throw new BusinessException("Não há espaço disponível neste setor");
-
     }
-
 }
