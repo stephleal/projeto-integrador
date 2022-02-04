@@ -23,8 +23,8 @@ public class CartController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createCart (@RequestBody Cart cart) {
-        return ResponseEntity.status(201).body(cartService.create(cart));
+    public ResponseEntity<CartDto> createCart (@RequestBody CartDto cartDto) {
+        return ResponseEntity.status(201).body(cartService.create(cartDto));
     }
 
     @PutMapping("/{id}")

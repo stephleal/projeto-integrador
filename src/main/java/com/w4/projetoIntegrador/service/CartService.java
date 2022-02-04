@@ -31,82 +31,79 @@ public class CartService {
     @Autowired
     ProductAnnouncementService productAnnouncementService;
 
-    public CartDto get(Long id){
-        CartDto cartDto = CartDto.convert(getCart(id));
-        cartDto.setTotalPrice(getTotalPrice(cartDto.getProducts()));
+    public CartDto get(Long id) {
+        Cart cart = getCart(id);
+        CartDto cartDto = CartDto.convert(cart);
+        cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
         return cartDto;
     }
+
 
     public Cart getCart(Long id) {
 
         try {
-//            List<ItemCart> itemCarts = cartRepository.findById(id).orElse(new Cart()).getItemCarts();
             Cart cart = cartRepository.findById(id).orElse(new Cart());
-
             List<ProductAnnouncement> productAnnouncements = new ArrayList<ProductAnnouncement>();
             for (ItemCart p : cart.getItemCarts()) {
                 productAnnouncements.add(p.getProductAnnouncement());
             }
             return cart;
         } catch (RuntimeException e) {
-            throw new NotFoundException("Product " + id + " não encontrado na base de dados.");
+            throw new NotFoundException("Cart " + id + " não encontrado na base de dados.");
         }
     }
 
-    public String create(Cart cart) {
+    public CartDto create(CartDto cartDto) {
 
-        Buyer buyer = buyerService.getBuyer(cart.getBuyerId());
+        Buyer buyer = buyerService.getBuyer(cartDto.getBuyerId());
+        Cart cart = CartDto.convert(cartDto);
         cart.setBuyer(buyer);
 
-        BigDecimal value = new BigDecimal(0);
+        List<ItemCart> itemCartList = new ArrayList<>();
 
-        List<ItemCart> itemCartList = cart.getItemCarts();
-
-        for (ItemCart itemCart : itemCartList) {
-            ProductAnnouncement p = productAnnouncementService.get(itemCart.getProductAnnouncementId());
-            List<BatchRepository.SoldStock> gt = batchRepository.getStock(p.getId());
-            itemCart.setProductAnnouncement(p);
-            BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCart.getQuantity())));
-            value = value.add(itemValue);
-            itemCart.setCart(cart);
+        for (ItemCartDto itemCartDto : cartDto.getProducts()) {
+            ProductAnnouncement p = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
+            itemCartList.add(ItemCartDto.convert(itemCartDto, p, cart));
         }
-
+        cart.setItemCarts(itemCartList);
         cartRepository.save(cart);
-
-        return String.valueOf(value);
+        cartDto.setId(cart.getId());
+        cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
+        return cartDto;
     }
 
-    private BigDecimal getTotalPrice(List<ItemCartDto>  itemCartListDto){
+    public CartDto updateCart(Long id, CartDto cartDto) {
+        Cart cart = cartRepository.findById(id).orElse(null);
+        cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
+        cart.setDate(cartDto.getDate());
+        cart.setStatusCode(cart.getStatusCode());
+
+        List<ItemCart> itemCarts = new ArrayList<>();
+
+        for (ItemCartDto itemCartDto : cartDto.getProducts()) {
+            ItemCart itemCart = itemCartService.getPurchaseProduct(itemCartDto.getId());
+            itemCart.setQuantity(itemCartDto.getQuantity());
+            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
+            itemCart.setProductAnnouncement(productAnnouncement);
+            itemCart.setCart(cart);
+            itemCarts.add(itemCart);
+        }
+        cart.setItemCarts(itemCarts);
+        cartRepository.save(cart);
+        cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
+
+        return cartDto;
+    }
+
+    private BigDecimal getTotalPrice(List<ItemCart> itemCartList) {
 
         BigDecimal value = new BigDecimal(0);
-        for (ItemCartDto itemCartDto : itemCartListDto) {
-           ProductAnnouncement p = productAnnouncementService.get(itemCartDto.getProductAnnouncementId());
-            BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCartDto.getQuantity())));
+        for (ItemCart itemCart : itemCartList) {
+            ProductAnnouncement p = productAnnouncementService.get(itemCart.getProductAnnouncement().getId());
+            BigDecimal itemValue = p.getPrice().multiply(new BigDecimal(String.valueOf(itemCart.getQuantity())));
             value = value.add(itemValue);
         }
         return value;
     }
 
-
-    public CartDto updateCart(Long id, CartDto cartDto){
-        Cart cart = cartRepository.findById(id).orElse(null);
-        cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
-        cart.setDate(cartDto.getDate());
-
-        List<ItemCart> itemCarts = new ArrayList<>();
-
-//        for (ItemCart itemCart: cartDto.getProducts()) {
-//            ItemCart itemCart1 = itemCartService.getPurchaseProduct(itemCart.getId());
-//            itemCart1.setQuantity(itemCart.getQuantity());
-//            ProductAnnouncement productAnnouncement = productAnnouncementService.get(itemCart.getProductAnnouncementId());
-//            itemCart1.setProductAnnouncement(productAnnouncement);
-//            itemCart1.setCart(cart);
-//            itemCarts.add(itemCart1);
-//        }
-        cart.setItemCarts(itemCarts);
-        cart.setStatusCode(cartDto.getStatusCode());
-        cartRepository.save(cart);
-
-        return cartDto;
-    }
 }

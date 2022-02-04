@@ -48,7 +48,12 @@ public class CartDto {
                 .statusCode(cart.getStatusCode())
                 .products(itemCartDtoList)
                 .build();
-
         // Não está injetando total price que deve ser injetado na Service
+    }
+
+    public static Cart convert(CartDto cartDto){
+
+        return Cart.builder().date(cartDto.getDate()).statusCode(cartDto.statusCode).build();
+    // Não esta injetanfo buyer e itemCarts
     }
 }
