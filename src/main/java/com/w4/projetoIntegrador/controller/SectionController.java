@@ -35,5 +35,11 @@ public class SectionController {
     public ResponseEntity<List<ValidDueDateProductsDto>> getValidDueDateProducts(@PathVariable Long id, @PathVariable Integer days) {
         return ResponseEntity.status(200).body(sectionService.getValidDueDateProducts(id, days));
     }
+
+    @GetMapping("/valid/category/{category}/days/{days}")
+    public ResponseEntity<List<ValidDueDateProductsDto>> getValidDueDateProductsByCategory(@PathVariable String category, @PathVariable Integer days, @RequestParam String orderBy) {
+        return ResponseEntity.status(200).body(sectionService.getValidDueDateProductsByCategory(category, days, orderBy));
+    }
+
 }
 
