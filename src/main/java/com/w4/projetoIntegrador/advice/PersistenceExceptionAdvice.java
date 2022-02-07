@@ -2,6 +2,7 @@ package com.w4.projetoIntegrador.advice;
 
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
+import com.w4.projetoIntegrador.exceptions.UserDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -26,6 +27,7 @@ public class PersistenceExceptionAdvice {
     @ExceptionHandler(value = NullPointerException.class)
     protected ResponseEntity<Object> handleNullPointer(NullPointerException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
+        ex.printStackTrace();
         return ResponseEntity.internalServerError().body(bodyOfResponse);
     }
 
@@ -45,6 +47,12 @@ public class PersistenceExceptionAdvice {
     protected ResponseEntity<Object> notFoundException(NotFoundException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
         return ResponseEntity.status(404).body(bodyOfResponse);
+    }
+
+    @ExceptionHandler(value = UserDoesNotExistException.class)
+    protected ResponseEntity<Object> userDoesNotExistException(UserDoesNotExistException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(bodyOfResponse);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

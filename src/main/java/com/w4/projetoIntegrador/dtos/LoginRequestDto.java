@@ -1,12 +1,11 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.w4.projetoIntegrador.entities.Agent;
-import com.w4.projetoIntegrador.entities.Section;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import javax.validation.constraints.NotNull;
 
@@ -23,5 +22,8 @@ public class LoginRequestDto {
     @NotNull
     private String password;
 
+    public UsernamePasswordAuthenticationToken converter() {
+        return new UsernamePasswordAuthenticationToken(username, password);
+    }
 
 }
