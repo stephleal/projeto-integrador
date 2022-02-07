@@ -6,7 +6,6 @@ import com.w4.projetoIntegrador.dtos.WarehouseStockDto;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.WarehouseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,8 +14,11 @@ import java.util.List;
 @Service
 public class WarehouseService {
 
-    @Autowired
     WarehouseRepository warehouseRepository;
+
+    public WarehouseService(WarehouseRepository warehouseRepository){
+        this.warehouseRepository = warehouseRepository;
+    }
 
     public Warehouse getWarehouse(Long id){
         try {

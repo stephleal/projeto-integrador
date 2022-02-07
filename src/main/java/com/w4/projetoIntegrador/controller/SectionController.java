@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
+import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.dtos.ValidDueDateProductsDto;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.service.SectionService;
@@ -15,18 +16,17 @@ import javax.validation.Valid;
 @RequestMapping("/sections")
 public class SectionController {
 
-
     @Autowired
     SectionService sectionService;
 
     @GetMapping("/{id}")
-    public Section getSection(@PathVariable Long id) {
+    public ResponseEntity<SectionDto> get(@PathVariable Long id) {
 
-        return sectionService.get(id);
+        return ResponseEntity.ok().body(sectionService.get(id));
     }
 
     @PostMapping()
-    public  ResponseEntity<Section> newSection(@Valid @RequestBody Section s) {
+    public  ResponseEntity<SectionDto> newSection(@Valid @RequestBody SectionDto s) {
 
         return ResponseEntity.status(201).body(sectionService.save(s));
     }

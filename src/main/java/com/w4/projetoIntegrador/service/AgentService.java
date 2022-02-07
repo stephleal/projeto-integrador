@@ -5,19 +5,20 @@ import com.w4.projetoIntegrador.entities.Agent;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.AgentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AgentService {
 
-    @Autowired
     AgentRepository agentRepository;
-
-    @Autowired
     SectionService sectionService;
 
-    public Agent getAgent(Long id){
+    public AgentService(AgentRepository agentRepository, SectionService sectionService) {
+        this.agentRepository = agentRepository;
+        this.sectionService = sectionService;
+    }
+
+    public Agent getAgent(Long id) {
         try {
             return agentRepository.findById(id).orElse(null);
 
@@ -31,7 +32,7 @@ public class AgentService {
     }
 
     public AgentDto save(AgentDto agentDto) {
-        Section section = sectionService.get(agentDto.getSectionId());
+        Section section = sectionService.getSection(agentDto.getSectionId());
         Agent agent = AgentDto.convert(agentDto, section);
         agentRepository.save(agent);
         agentDto.setId(agent.getId());

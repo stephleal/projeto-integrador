@@ -4,16 +4,18 @@ import com.w4.projetoIntegrador.dtos.BuyerDto;
 import com.w4.projetoIntegrador.entities.Buyer;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BuyerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BuyerService {
 
-    @Autowired
     BuyerRepository buyerRepository;
 
-    public BuyerDto get(Long id){
+    public BuyerService(BuyerRepository buyerRepository){
+        this.buyerRepository = buyerRepository;
+    }
+
+    public BuyerDto get(Long id) {
         return BuyerDto.convert(getBuyer(id));
     }
 

@@ -6,22 +6,24 @@ import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.entities.Seller;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductAnnouncementService {
 
-    @Autowired
     ProductService productService;
-
-    @Autowired
     ProductAnnouncementRepository productAnnouncementRepository;
-
-    @Autowired
     SellerService sellerService;
 
-    public ProductAnnouncement getProductAnnouncement(Long id){
+    public ProductAnnouncementService(ProductService productService,
+                                      ProductAnnouncementRepository productAnnouncementRepository,
+                                      SellerService sellerService) {
+        this.productService = productService;
+        this.productAnnouncementRepository = productAnnouncementRepository;
+        this.sellerService = sellerService;
+    }
+
+    public ProductAnnouncement getProductAnnouncement(Long id) {
         try {
             ProductAnnouncement productAnnouncement = productAnnouncementRepository.findById(id).orElse(null);
             productAnnouncement.setProductId(productAnnouncement.getProduct().getId());
@@ -32,13 +34,13 @@ public class ProductAnnouncementService {
         }
     }
 
-    public ProductAnnouncementDto get(Long id){
-     return ProductAnnouncementDto.convert(getProductAnnouncement(id));
+    public ProductAnnouncementDto get(Long id) {
+        return ProductAnnouncementDto.convert(getProductAnnouncement(id));
     }
 
-    public ProductAnnouncementDto save(ProductAnnouncement productAnnouncement){
-        Product p = productService.get(productAnnouncement.getProductId());
-        Seller seller = sellerService.get(productAnnouncement.getSellerId());
+    public ProductAnnouncementDto save(ProductAnnouncement productAnnouncement) {
+        Product p = productService.getProduct(productAnnouncement.getProductId());
+        Seller seller = sellerService.getSeller(productAnnouncement.getSellerId());
         productAnnouncement.setProduct(p);
         productAnnouncement.setSeller(seller);
 
