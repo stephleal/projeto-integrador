@@ -29,4 +29,9 @@ public class ProductDto {
         Product product = Product.builder().name(p.getName()).productType(type).build();
         return  product;
     }
+
+    public static ProductDto convert(Product product){
+
+        return ProductDto.builder().name(product.getName()).productType(product.getProductType().toString()).build();
+    }
 }

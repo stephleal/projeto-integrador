@@ -42,7 +42,7 @@ public class ProductService {
     @Autowired
     SectionRepository sectionRepository;
 
-    public Product get(Long id) {
+    public Product getProduct(Long id) {
         try {
             return productRepository.findById(id).orElse(null);
         } catch (RuntimeException e) {
@@ -50,13 +50,26 @@ public class ProductService {
         }
     }
 
-    public Product save(ProductDto p) {
-        Product product = ProductDto.convert(p);
-
-        return productRepository.save(product);
+    public ProductDto get(Long id) {
+        return ProductDto.convert(getProduct(id));
     }
 
-    public List<Product> getProductList() {
+    public ProductDto save(ProductDto p) {
+        Product product = ProductDto.convert(p);
+        productRepository.save(product);
+        return p;
+    }
+
+    public List<ProductDto> getProductDtoList() {
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        for (Product p : getProductList()) {
+            productDtoList.add(ProductDto.convert(p));
+        }
+        return productDtoList;
+    }
+
+    private List<Product> getProductList() {
 
         List<Product> productList = new ArrayList<Product>();
 
@@ -68,7 +81,17 @@ public class ProductService {
         return productList;
     }
 
-    public List<Product> getProductListByCategory(String category) {
+    public List<ProductDto> getProductDtoListByCategory(String category) {
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        for (Product p : getProductListByCategory(category)) {
+            productDtoList.add(ProductDto.convert(p));
+        }
+        return productDtoList;
+    }
+
+
+    private List<Product> getProductListByCategory(String category) {
 
         List<Product> productListByCategory = getProductList();
 
@@ -130,7 +153,7 @@ public class ProductService {
                 return productLocationDto;
 
             default:
-                throw  new BusinessException("Parâmetro inválido");
+                throw new BusinessException("Parâmetro inválido");
 
         }
     }

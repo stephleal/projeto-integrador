@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.dtos.ValidDueDateProductsDto;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.entities.Warehouse;
@@ -26,7 +27,7 @@ public class SectionService {
         @Autowired
         WarehouseService warehouseService;
 
-        public Section get(Long id) {
+        public Section getSection(Long id){
             try {
                 Section section = sectionRepository.findById(id).orElse(null);
                 section.setWarehouseId(section.getWarehouse().getId());
@@ -36,10 +37,15 @@ public class SectionService {
             }
         }
 
-        public Section save(Section section) {
-           Warehouse w = warehouseService.getWarehouse(section.getWarehouse().getId());
-           section.setWarehouse(w);
-           return sectionRepository.save(section);
+        public SectionDto get(Long id) {
+            return SectionDto.convert(getSection(id));
+        }
+
+        public SectionDto save(SectionDto sectionDto) {
+           Warehouse w = warehouseService.getWarehouse(sectionDto.getWarehouseId());
+          Section section = SectionDto.convert(sectionDto, w);
+          sectionRepository.save(section);
+          return sectionDto;
         }
 
         public List<ValidDueDateProductsDto> getValidDueDateProducts(Long id, Integer dias) {

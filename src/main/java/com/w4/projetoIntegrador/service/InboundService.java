@@ -34,7 +34,7 @@ public class InboundService {
 
     public InboundDto create(InboundDto inboundDto) {
         try {
-            Section s = sectionService.get(inboundDto.getSectionId());
+            Section s = sectionService.getSection(inboundDto.getSectionId());
             Agent agent = agentService.getAgent(inboundDto.getAgentId());
 
             if (!agent.getSection().getId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
@@ -71,7 +71,7 @@ public class InboundService {
 
    public InboundDto update(Long id, InboundDto inbound){
        Inbound foundedInbound = inboundRepository.findById(id).orElse(null);
-       foundedInbound.setSection(sectionService.get(inbound.getSectionId()));
+       foundedInbound.setSection(sectionService.getSection(inbound.getSectionId()));
        foundedInbound.setDate(inbound.getDate());
        List<Batch> newBatchList = new ArrayList<>();
 

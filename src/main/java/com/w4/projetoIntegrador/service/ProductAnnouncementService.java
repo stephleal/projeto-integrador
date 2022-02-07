@@ -37,8 +37,8 @@ public class ProductAnnouncementService {
     }
 
     public ProductAnnouncementDto save(ProductAnnouncement productAnnouncement){
-        Product p = productService.get(productAnnouncement.getProductId());
-        Seller seller = sellerService.get(productAnnouncement.getSellerId());
+        Product p = productService.getProduct(productAnnouncement.getProductId());
+        Seller seller = sellerService.getSeller(productAnnouncement.getSellerId());
         productAnnouncement.setProduct(p);
         productAnnouncement.setSeller(seller);
 

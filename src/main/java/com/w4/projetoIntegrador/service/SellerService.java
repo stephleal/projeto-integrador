@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.SellerDto;
 import com.w4.projetoIntegrador.entities.Seller;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.SellerRepository;
@@ -11,15 +12,21 @@ public class SellerService {
     @Autowired
     SellerRepository sellerRepository;
 
-    public Seller get(Long id){
+    public Seller getSeller(Long id){
         try {
-        return sellerRepository.findById(id).orElse(null);
+            return sellerRepository.findById(id).orElse(null);
         } catch (RuntimeException e) {
             throw new NotFoundException("Seller " + id + " não encontrado na base de dados.");
         }
     }
 
-    public Seller save(Seller seller){
-        return sellerRepository.save(seller);
+    public SellerDto get(Long id){
+        Seller seller = getSeller(id);
+        return SellerDto.convert(seller);
+    }
+
+    public SellerDto save(SellerDto sellerDto){
+        sellerRepository.save(SellerDto.convert(sellerDto));
+        return sellerDto;
     }
 }

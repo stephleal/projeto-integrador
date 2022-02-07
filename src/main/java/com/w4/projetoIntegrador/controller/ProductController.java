@@ -20,23 +20,24 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id){
-        return productService.get(id);
+    public ResponseEntity<ProductDto> get(@PathVariable Long id){
+        return ResponseEntity.ok().body(productService.get(id));
     }
 
     @PostMapping()
-    public ResponseEntity<Product> newProduct(@Valid @RequestBody ProductDto p){
+    public ResponseEntity<ProductDto> newProduct(@Valid @RequestBody ProductDto p){
         return ResponseEntity.status(201).body(productService.save(p));
     }
 
     @GetMapping("/")
-    public List<Product> getProductList(){
-        return productService.getProductList();
+    public ResponseEntity<List<ProductDto>> getProductList(){
+
+        return ResponseEntity.ok().body(productService.getProductDtoList());
     }
 
     @GetMapping("/list")
-    public List<Product> getProductlistByCategory(@RequestParam String category){
-        return productService.getProductListByCategory(category);
+    public ResponseEntity<List<ProductDto>> getProductlistByCategory(@RequestParam String category){
+        return ResponseEntity.ok().body(productService.getProductDtoListByCategory(category));
     }
 
     @GetMapping("/loc")
