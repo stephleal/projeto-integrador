@@ -2,7 +2,8 @@
 
 Implemented
 ### US1
-- (Implementar o URI para devolver na response)
+- Post cadastrar os produtos de um lote no armazém.
+- Put Caso o lote já exista deve ser atualizado.
 
 
 ### US2
