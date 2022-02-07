@@ -16,7 +16,6 @@ import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
 import com.w4.projetoIntegrador.repository.ProductRepository;
 import com.w4.projetoIntegrador.repository.SectionRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,20 +26,27 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    @Autowired
     ProductRepository productRepository;
 
-    @Autowired
     ProductAnnouncementRepository productAnnouncementRepository;
 
-    @Autowired
     BatchRepository batchRepository;
 
-    @Autowired
     InboundRepository inboundRepository;
 
-    @Autowired
     SectionRepository sectionRepository;
+
+    public ProductService(ProductRepository productRepository,
+            ProductAnnouncementRepository productAnnouncementRepository,
+            BatchRepository batchRepository,
+            InboundRepository inboundRepository,
+            SectionRepository sectionRepository){
+        this.productRepository = productRepository;
+        this.productAnnouncementRepository = productAnnouncementRepository;
+        this.batchRepository = batchRepository;
+        this.inboundRepository = inboundRepository;
+        this.sectionRepository = sectionRepository;
+    }
 
     public Product getProduct(Long id) {
         try {

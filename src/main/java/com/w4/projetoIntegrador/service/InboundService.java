@@ -7,7 +7,6 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,20 +16,28 @@ import java.util.stream.Collectors;
 @Service
 public class InboundService {
 
-    @Autowired
     private InboundRepository inboundRepository;
 
-    @Autowired
     private ProductAnnouncementService productAnnouncementService;
 
-    @Autowired
     private SectionService sectionService;
 
-    @Autowired
     private AgentService agentService;
 
-    @Autowired
     private BatchService batchService;
+
+    public InboundService(InboundRepository inboundRepository,
+                          ProductAnnouncementService productAnnouncementService,
+                          SectionService sectionService,
+                          AgentService agentService,
+                          BatchService batchService){
+
+        this.inboundRepository = inboundRepository;
+        this.productAnnouncementService = productAnnouncementService;
+        this.sectionService = sectionService;
+        this.agentService = agentService;
+        this.batchService = batchService;
+    };
 
     public InboundDto create(InboundDto inboundDto) {
         try {
@@ -59,6 +66,7 @@ public class InboundService {
             throw new BusinessException(e.getMessage());
         }
     }
+
 
     public InboundDto get(Long id){
        try {
