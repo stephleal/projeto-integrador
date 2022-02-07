@@ -1,7 +1,6 @@
 ## Projeto Integrador
 
-Todo list
-
+Implemented
 ### US1
 - (Implementar o URI para devolver na response)
 
@@ -11,6 +10,20 @@ Todo list
 - Tratamento de erro em caso de produto sem estoque
 
 ### US3
+ - Get /list
+ - Verifique a localização de um produto por armazém.
+ 
+ ### US4
+  - Get /loc
+  - Consultar o estoque de um produto em todos os armazéns.
+  
+  ### US5
+   - Consultar a validade por lote.
+   - Get verificando validade
+   - Get verificando categoria e dias a vencer de um produto.
+ 
+ Todo list
+
 
 ### Revisão final
 - Refatorar Classes separando Entities de DTOs
