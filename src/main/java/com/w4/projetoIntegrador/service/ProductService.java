@@ -16,7 +16,6 @@ import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
 import com.w4.projetoIntegrador.repository.ProductRepository;
 import com.w4.projetoIntegrador.repository.SectionRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,22 +26,29 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    @Autowired
     ProductRepository productRepository;
 
-    @Autowired
     ProductAnnouncementRepository productAnnouncementRepository;
 
-    @Autowired
     BatchRepository batchRepository;
 
-    @Autowired
     InboundRepository inboundRepository;
 
-    @Autowired
     SectionRepository sectionRepository;
 
-    public Product get(Long id) {
+    public ProductService(ProductRepository productRepository,
+            ProductAnnouncementRepository productAnnouncementRepository,
+            BatchRepository batchRepository,
+            InboundRepository inboundRepository,
+            SectionRepository sectionRepository){
+        this.productRepository = productRepository;
+        this.productAnnouncementRepository = productAnnouncementRepository;
+        this.batchRepository = batchRepository;
+        this.inboundRepository = inboundRepository;
+        this.sectionRepository = sectionRepository;
+    }
+
+    public Product getProduct(Long id) {
         try {
             return productRepository.findById(id).orElse(null);
         } catch (RuntimeException e) {
@@ -50,13 +56,26 @@ public class ProductService {
         }
     }
 
-    public Product save(ProductDto p) {
-        Product product = ProductDto.convert(p);
-
-        return productRepository.save(product);
+    public ProductDto get(Long id) {
+        return ProductDto.convert(getProduct(id));
     }
 
-    public List<Product> getProductList() {
+    public ProductDto save(ProductDto p) {
+        Product product = ProductDto.convert(p);
+        productRepository.save(product);
+        return p;
+    }
+
+    public List<ProductDto> getProductDtoList() {
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        for (Product p : getProductList()) {
+            productDtoList.add(ProductDto.convert(p));
+        }
+        return productDtoList;
+    }
+
+    private List<Product> getProductList() {
 
         List<Product> productList = new ArrayList<Product>();
 
@@ -68,7 +87,17 @@ public class ProductService {
         return productList;
     }
 
-    public List<Product> getProductListByCategory(String category) {
+    public List<ProductDto> getProductDtoListByCategory(String category) {
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        for (Product p : getProductListByCategory(category)) {
+            productDtoList.add(ProductDto.convert(p));
+        }
+        return productDtoList;
+    }
+
+
+    private List<Product> getProductListByCategory(String category) {
 
         List<Product> productListByCategory = getProductList();
 
@@ -130,7 +159,7 @@ public class ProductService {
                 return productLocationDto;
 
             default:
-                throw  new BusinessException("Parâmetro inválido");
+                throw new BusinessException("Parâmetro inválido");
 
         }
     }

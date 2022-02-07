@@ -4,9 +4,7 @@ import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
-import com.w4.projetoIntegrador.repository.BatchRepository;
 import com.w4.projetoIntegrador.repository.CartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,20 +14,20 @@ import java.util.List;
 @Service
 public class CartService {
 
-    @Autowired
     CartRepository cartRepository;
-
-    @Autowired
-    BatchRepository batchRepository;
-
-    @Autowired
     BuyerService buyerService;
-
-    @Autowired
     ItemCartService itemCartService;
-
-    @Autowired
     ProductAnnouncementService productAnnouncementService;
+
+    public CartService(  CartRepository cartRepository,
+            BuyerService buyerService,
+            ItemCartService itemCartService,
+            ProductAnnouncementService productAnnouncementService){
+        this.cartRepository = cartRepository;
+        this.buyerService = buyerService;
+        this.itemCartService = itemCartService;
+        this.productAnnouncementService = productAnnouncementService;
+    }
 
     public CartDto get(Long id) {
         Cart cart = getCart(id);

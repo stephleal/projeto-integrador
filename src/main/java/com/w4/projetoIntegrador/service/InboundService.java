@@ -7,7 +7,6 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,24 +16,32 @@ import java.util.stream.Collectors;
 @Service
 public class InboundService {
 
-    @Autowired
     private InboundRepository inboundRepository;
 
-    @Autowired
     private ProductAnnouncementService productAnnouncementService;
 
-    @Autowired
     private SectionService sectionService;
 
-    @Autowired
     private AgentService agentService;
 
-    @Autowired
     private BatchService batchService;
+
+    public InboundService(InboundRepository inboundRepository,
+                          ProductAnnouncementService productAnnouncementService,
+                          SectionService sectionService,
+                          AgentService agentService,
+                          BatchService batchService){
+
+        this.inboundRepository = inboundRepository;
+        this.productAnnouncementService = productAnnouncementService;
+        this.sectionService = sectionService;
+        this.agentService = agentService;
+        this.batchService = batchService;
+    };
 
     public InboundDto create(InboundDto inboundDto) {
         try {
-            Section s = sectionService.get(inboundDto.getSectionId());
+            Section s = sectionService.getSection(inboundDto.getSectionId());
             Agent agent = agentService.getAgent(inboundDto.getAgentId());
 
             if (!agent.getSection().getId().equals(s.getId())) throw new BusinessException("O representante não pertence a este setor");
@@ -60,6 +67,7 @@ public class InboundService {
         }
     }
 
+
     public InboundDto get(Long id){
        try {
         Inbound inbound = inboundRepository.findById(id).orElse(null);
@@ -71,7 +79,7 @@ public class InboundService {
 
    public InboundDto update(Long id, InboundDto inbound){
        Inbound foundedInbound = inboundRepository.findById(id).orElse(null);
-       foundedInbound.setSection(sectionService.get(inbound.getSectionId()));
+       foundedInbound.setSection(sectionService.getSection(inbound.getSectionId()));
        foundedInbound.setDate(inbound.getDate());
        List<Batch> newBatchList = new ArrayList<>();
 
