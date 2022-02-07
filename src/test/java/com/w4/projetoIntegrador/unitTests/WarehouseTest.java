@@ -21,9 +21,7 @@ public class WarehouseTest {
 
         //arrange
         WarehouseRepository mock = Mockito.mock(WarehouseRepository.class);
-
         Mockito.when(mock.save(Mockito.any())).thenReturn(warehouse);
-
         WarehouseService warehouseService = new WarehouseService(mock);
 
         //act
