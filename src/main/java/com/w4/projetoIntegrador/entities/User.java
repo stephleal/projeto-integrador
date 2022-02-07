@@ -13,9 +13,11 @@ public class User {
     public boolean isActive() {
         return enabled;
     }
+
     public void setActive(boolean active) {
         this.enabled = active;
     }
+
     @Id
     @Column(length = 20)
     private String username;
@@ -31,12 +33,15 @@ public class User {
     public String getUser() {
         return username;
     }
+
     public void setUser(String user) {
         this.username = user;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
