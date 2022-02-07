@@ -25,6 +25,7 @@ public class InboundController {
 
     @PostMapping
     public ResponseEntity<InboundDto> cadastra(@Valid @RequestBody InboundDto inbound) {
+        //validar o agent via token
     return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 
