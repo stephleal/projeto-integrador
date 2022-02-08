@@ -22,7 +22,7 @@ public class ProductAnnouncementController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductAnnouncementDto> newProduct(@Valid @RequestBody ProductAnnouncement p){
+    public ResponseEntity<ProductAnnouncementDto> newProduct(@Valid @RequestBody ProductAnnouncementDto p){
         return ResponseEntity.status(201).body(productAnnouncementService.save(p));
     }
 }
