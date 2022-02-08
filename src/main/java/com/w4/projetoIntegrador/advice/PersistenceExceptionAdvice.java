@@ -3,6 +3,8 @@ package com.w4.projetoIntegrador.advice;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.exceptions.UserDoesNotExistException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,6 +22,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class PersistenceExceptionAdvice {
+
+    private static Logger log = LoggerFactory.getLogger(PersistenceExceptionAdvice.class);
 
     @Autowired
     private MessageSource messageSource;
@@ -52,6 +56,7 @@ public class PersistenceExceptionAdvice {
     @ExceptionHandler(value = UserDoesNotExistException.class)
     protected ResponseEntity<Object> userDoesNotExistException(UserDoesNotExistException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
+        log.warn(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(bodyOfResponse);
     }
 

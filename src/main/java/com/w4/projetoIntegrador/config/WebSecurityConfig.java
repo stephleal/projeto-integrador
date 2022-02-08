@@ -35,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/productannouncements").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/inboundorder").hasAnyAuthority("AGENT")
+                .antMatchers(HttpMethod.GET, "/products").hasAnyAuthority("AGENT")
+                .antMatchers(HttpMethod.POST, "/products").hasAnyAuthority("AGENT")
                 .antMatchers(HttpMethod.POST, "/orders").hasAnyAuthority("BUYER")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
