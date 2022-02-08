@@ -32,7 +32,7 @@ public class SectionTest {
 
     private ValidDueDateProductsDto validProduct = ValidDueDateProductsDto.builder()
     .productId(3L)
-    .dueDate(LocalDate.now()).build();
+    .dueDate(LocalDate.now()).productTypeId(10l).build();
 
     @Test
     public void deveCadastrarUmWarehouse() {
@@ -111,6 +111,34 @@ public class SectionTest {
 
     @Test
     public void deveRetornarListaDeProdutosValidosPorCategoriaASC() {
+        SectionRepository mockSectionRepository = Mockito.mock(SectionRepository.class);
+        WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
+
+        SectionRepository.ValidDueDateProductsByCategory mockSectionValidDueDateInterface = Mockito.mock(SectionRepository.ValidDueDateProductsByCategory.class);
+
+        List<SectionRepository.ValidDueDateProductsByCategory> validProductsByCategory = new ArrayList<>();
+
+        Mockito.when(mockSectionRepository.findValidDueDateProductsByCategoryAsc(Mockito.anyInt())).thenReturn(validProductsByCategory);
+
+        SectionService sectionService = new SectionService(mockSectionRepository,mockWarehouseService);
+
+        Mockito.when(mockSectionValidDueDateInterface.getDueDate()).thenReturn(validProduct.getDueDate());
+        Mockito.when(mockSectionValidDueDateInterface.getProductId()).thenReturn(validProduct.getProductId());
+        Mockito.when(mockSectionValidDueDateInterface.getProductTypeId()).thenReturn(validProduct.getProductTypeId());
+
+        List<SectionRepository.ValidDueDateProductsByCategory> listA = new ArrayList<>();
+
+        listA.add(mockSectionValidDueDateInterface);
+
+        Mockito.when(mockSectionRepository.findValidDueDateProductsByCategoryAsc(Mockito.anyInt())).thenReturn(listA);
+
+        List<ValidDueDateProductsDto> validDueDateDtoList = sectionService.getValidDueDateProductsByCategory("congelado", 3,"asc");
+
+        System.out.println(validDueDateDtoList);
+        System.out.println(listA.get(0).getProductTypeId());
+
+        assertEquals(validDueDateDtoList.get(0).getProductTypeId(), listA.get(0).getProductTypeId());
+
 
     }
 
