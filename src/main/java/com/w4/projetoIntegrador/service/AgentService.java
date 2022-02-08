@@ -27,13 +27,14 @@ public class AgentService {
     }
 
     public AgentDto get(Long id) {
+
         return AgentDto.convert(getAgent(id));
     }
 
     public AgentDto save(AgentDto agentDto) {
         Section section = sectionService.getSection(agentDto.getSectionId());
         Agent agent = AgentDto.convert(agentDto, section);
-        agentRepository.save(agent);
+        agent = agentRepository.save(agent);
         agentDto.setId(agent.getId());
         return agentDto;
     }
