@@ -27,6 +27,6 @@ public class SellerDto {
     }
 
     public static SellerDto convert (Seller seller){
-        return SellerDto.builder().name(seller.getName()).build();
+        return SellerDto.builder().id(seller.getId()).name(seller.getName()).build();
     }
 }
