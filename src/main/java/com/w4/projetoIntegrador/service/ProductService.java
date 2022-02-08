@@ -27,13 +27,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     ProductRepository productRepository;
-
     ProductAnnouncementRepository productAnnouncementRepository;
-
     BatchRepository batchRepository;
-
     InboundRepository inboundRepository;
-
     SectionRepository sectionRepository;
 
     public ProductService(ProductRepository productRepository,
@@ -101,9 +97,11 @@ public class ProductService {
 
         List<Product> productListByCategory = getProductList();
 
+        ProductTypes mp = ProductTypes.valueOf(category);
+
         productListByCategory = productListByCategory
                 .stream()
-                .filter(product -> product.equals(ProductTypes.valueOf(category)))
+                .filter(product -> product.getProductType().equals(ProductTypes.valueOf(category)))
                 .collect(Collectors.toList());
 
 
