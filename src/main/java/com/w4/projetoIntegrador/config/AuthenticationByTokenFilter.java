@@ -3,6 +3,7 @@ package com.w4.projetoIntegrador.config;
 import com.w4.projetoIntegrador.entities.User;
 import com.w4.projetoIntegrador.exceptions.UserDoesNotExistException;
 import com.w4.projetoIntegrador.repository.UserRepository;
+import com.w4.projetoIntegrador.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
