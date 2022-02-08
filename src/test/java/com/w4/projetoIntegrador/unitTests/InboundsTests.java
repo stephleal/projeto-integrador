@@ -305,7 +305,6 @@ public class InboundsTests {
         BatchService mockBatchService = Mockito.mock(BatchService.class);
 
         Mockito.when(mockInboundRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
-//        Mockito.when(mockInboundRepository.findById(Mockito.anyLong())).thenReturn(inbound1);
 
         Mockito.when(mockSectionService.getSection(Mockito.any())).thenReturn(section1);
         Mockito.when(mockAgentService.getAgent(Mockito.any())).thenReturn(agent1);
