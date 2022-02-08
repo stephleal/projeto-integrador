@@ -1,4 +1,4 @@
-package com.w4.projetoIntegrador.config;
+package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.entities.User;
 import io.jsonwebtoken.Claims;
@@ -33,7 +33,7 @@ public class TokenService {
                 .setIssuer("Team 11")
                 .setSubject(user.getUsername())
                 .addClaims(new HashMap<>() {{
-                    //put("profileType", user.getProfileType());
+                    put("profileType", user.getProfileType());
                 }})
                 .setIssuedAt(today)
                 .setExpiration(expirated)

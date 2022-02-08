@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.config;
 
 import com.w4.projetoIntegrador.repository.UserRepository;
+import com.w4.projetoIntegrador.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
