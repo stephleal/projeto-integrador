@@ -1,9 +1,17 @@
 package com.w4.projetoIntegrador.entities;
 
 import com.w4.projetoIntegrador.enums.ProfileTypes;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -28,25 +36,4 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private ProfileTypes profileType;
-
-
-    public String getUser() {
-        return username;
-    }
-
-    public void setUser(String user) {
-        this.username = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getProfileType() {
-        return profileType.name();
-    }
 }

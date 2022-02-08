@@ -13,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AuthenticationByTokenFilter extends OncePerRequestFilter {
@@ -47,7 +45,7 @@ public class AuthenticationByTokenFilter extends OncePerRequestFilter {
         String userName = tokenService.getUsername(token);
         User user = this.repository.findById(userName).orElseThrow(UserDoesNotExistException::new);
         List<SimpleGrantedAuthority> authorities =
-                List.of(new SimpleGrantedAuthority(user.getProfileType()));
+                List.of(new SimpleGrantedAuthority(user.getProfileType().name()));
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(new UsernamePasswordAuthenticationToken(user, null, authorities));
