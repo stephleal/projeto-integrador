@@ -21,7 +21,6 @@ public class AgentService {
     public Agent getAgent(Long id) {
         try {
             return agentRepository.findById(id).orElse(null);
-
         } catch (RuntimeException e) {
             throw new NotFoundException("Agent " + id + " não encontrado na base de dados.");
         }
