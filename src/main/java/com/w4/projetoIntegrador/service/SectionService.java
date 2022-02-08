@@ -24,11 +24,9 @@ public class SectionService {
 
     WarehouseService warehouseService;
 
-    public SectionService(SectionRepository sectionRepository,
-                          WarehouseService warehouseService) {
+    public SectionService(SectionRepository sectionRepository, WarehouseService warehouseService) {
         this.sectionRepository = sectionRepository;
         this.warehouseService = warehouseService;
-
     }
 
     public Section getSection(Long id) {

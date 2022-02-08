@@ -87,6 +87,20 @@ public class InboundsTests {
             .section(section2)
             .build();
 
+    private Batch batch1a = Batch.builder()
+            .id(1L)
+            .productAnnouncement(pa1)
+            .initialQuantity(10)
+            .stock(10)
+            .inbound(inbound1).build();
+
+    private Batch batch2a = Batch.builder()
+            .id(1L)
+            .productAnnouncement(pa1)
+            .initialQuantity(10)
+            .stock(10)
+            .inbound(inbound2).build();
+
     @Test
     public void deveBuscarUmaInboundOrder() {
 
@@ -98,7 +112,6 @@ public class InboundsTests {
         BatchService mockBatchService = Mockito.mock(BatchService.class);
 
         Mockito.when(mockInboundRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(inbound1));
-
         Mockito.when(mockSectionService.getSection(Mockito.any())).thenReturn(section1);
         Mockito.when(mockAgentService.getAgent(Mockito.any())).thenReturn(agent1);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.any())).thenReturn(pa1);
@@ -148,6 +161,9 @@ public class InboundsTests {
         AgentService mockAgentService = Mockito.mock(AgentService.class);
         BatchService mockBatchService = Mockito.mock(BatchService.class);
 
+        Mockito.when(mockInboundRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(inbound1));
+
+        Mockito.when(mockBatchService.getBatch(Mockito.any())).thenReturn(batch1a);
         Mockito.when(mockInboundRepository.save(Mockito.any())).thenReturn(inbound1);
         Mockito.when(mockSectionService.getSection(Mockito.any())).thenReturn(section1);
         Mockito.when(mockAgentService.getAgent(Mockito.any())).thenReturn(agent1);
@@ -157,11 +173,42 @@ public class InboundsTests {
                 mockProductAnnouncementService, mockSectionService, mockAgentService, mockBatchService);
 
         //act
-        InboundDto inboundDtoReceived = inboundService.create(validInboundDto1);
+        InboundDto inboundDtoReceived = inboundService.update(1L, validInboundDto1);
 
         //assertion
         assertEquals(inboundDtoReceived.getAgentId(), validInboundDto1.getAgentId());
     }
+
+    @Test
+    public void deveLancarExcessaoAoAtualizarInboundComBatchsDeOutrosInbounds() {
+
+        //arrange
+        InboundRepository mockInboundRepository = Mockito.mock(InboundRepository.class);
+        ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        SectionService mockSectionService = Mockito.mock(SectionService.class);
+        AgentService mockAgentService = Mockito.mock(AgentService.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+
+        Mockito.when(mockInboundRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(inbound1));
+
+        Mockito.when(mockBatchService.getBatch(Mockito.any())).thenReturn(batch2a);
+        Mockito.when(mockInboundRepository.save(Mockito.any())).thenReturn(inbound1);
+        Mockito.when(mockSectionService.getSection(Mockito.any())).thenReturn(section1);
+        Mockito.when(mockAgentService.getAgent(Mockito.any())).thenReturn(agent1);
+        Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.any())).thenReturn(pa1);
+
+        InboundService inboundService = new InboundService(mockInboundRepository,
+                mockProductAnnouncementService, mockSectionService, mockAgentService, mockBatchService);
+
+        //act
+        BusinessException businessException = assertThrows(BusinessException.class,
+                () -> inboundService.update(1L, validInboundDto1));
+
+        //assertion
+        assertTrue(businessException.getMessage().contains("Id de batch não corresponde ao inbound"));
+
+    }
+
 
     @Test
     public void deveLançarExceçãoAoCadastrarInboundComRepresentanteQueNaoPertenceAoSetor() {
