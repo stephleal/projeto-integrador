@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
     @Query(value = "select batches.id as batchNumber, batches.product_announcement_id as productId, "
-    +  "batches.type as productTypeId, batches.due_date as dueDate, batches.stock as quantity, "
+    +  "batches.due_date as dueDate, batches.stock as quantity, "
     + "sections.id as sectionId  from batches, sections, inbounds where inbounds.section_id = sections.id and "
     + "batches.inbound_id = inbounds.id and sections.id = :sectionId order by dueDate", nativeQuery = true)
     List<ValidDueDateProducts> findValidDueDateProducts(Long sectionId);
