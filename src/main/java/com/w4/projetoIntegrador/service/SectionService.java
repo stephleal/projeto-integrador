@@ -72,7 +72,6 @@ public class SectionService {
     public List<ValidDueDateProductsDto> getValidDueDateProductsByCategory(String type, Integer days, String orderBy) {
 
         Integer id = ProductTypes.valueOf(type).ordinal();
-        System.out.println(id);
         List<SectionRepository.ValidDueDateProductsByCategory> validProductsByCategory;
 
         switch (orderBy) {
