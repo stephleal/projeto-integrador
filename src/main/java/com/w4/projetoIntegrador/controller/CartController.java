@@ -32,4 +32,9 @@ public class CartController {
 
         return ResponseEntity.status(201).body(cartService.updateCart(id, cartDto));
     }
+
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity<CartDto> cancelCart (@PathVariable Long id) {
+        return ResponseEntity.ok().body(cartService.cancelCart(id));
+    }
 }

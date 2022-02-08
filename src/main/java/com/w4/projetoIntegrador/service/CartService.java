@@ -5,6 +5,7 @@ import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.CartRepository;
+import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,15 +19,18 @@ public class CartService {
     BuyerService buyerService;
     ItemCartService itemCartService;
     ProductAnnouncementService productAnnouncementService;
+    ItemCartRepository itemCartRepository;
 
-    public CartService(  CartRepository cartRepository,
-            BuyerService buyerService,
-            ItemCartService itemCartService,
-            ProductAnnouncementService productAnnouncementService){
+    public CartService(CartRepository cartRepository,
+                       BuyerService buyerService,
+                       ItemCartService itemCartService,
+                       ProductAnnouncementService productAnnouncementService,
+                       ItemCartRepository itemCartRepository) {
         this.cartRepository = cartRepository;
         this.buyerService = buyerService;
         this.itemCartService = itemCartService;
         this.productAnnouncementService = productAnnouncementService;
+        this.itemCartRepository = itemCartRepository;
     }
 
     public CartDto get(Long id) {
@@ -104,4 +108,17 @@ public class CartService {
         return value;
     }
 
+    public CartDto cancelCart(Long id) {
+
+        Cart cart = getCart(id);
+
+        for (ItemCart itemCart : cart.getItemCarts()) {
+            itemCart.setCart(null);
+        }
+        itemCartRepository.saveAll(cart.getItemCarts());
+        cart.setItemCarts(new ArrayList<>());
+        cart.setStatusCode("Cancelado");
+
+        return CartDto.convert(cartRepository.save(cart));
+    }
 }
