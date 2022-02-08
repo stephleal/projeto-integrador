@@ -7,6 +7,8 @@ import com.w4.projetoIntegrador.service.BuyerService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BuyerTest {
@@ -33,5 +35,21 @@ public class BuyerTest {
             assertEquals(b.getName(), buyerDto.getName());
         }
 
+    @Test
+    public void deveBuscarUmBuyer() {
+
+        //arrange
+        BuyerRepository mock = Mockito.mock(BuyerRepository.class);
+
+        Mockito.when(mock.findById(Mockito.anyLong())).thenReturn(Optional.of(buyer));
+
+        BuyerService buyerService = new BuyerService(mock);
+
+        //act
+        BuyerDto b = buyerService.get(1L);
+
+        //assertion
+        assertEquals(b.getName(), buyerDto.getName());
+    }
     }
 
