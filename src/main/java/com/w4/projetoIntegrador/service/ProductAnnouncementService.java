@@ -38,17 +38,16 @@ public class ProductAnnouncementService {
         return ProductAnnouncementDto.convert(getProductAnnouncement(id));
     }
 
-    public ProductAnnouncementDto save(ProductAnnouncement productAnnouncement) {
-        Product p = productService.getProduct(productAnnouncement.getProductId());
-        Seller seller = sellerService.getSeller(productAnnouncement.getSellerId());
-        productAnnouncement.setProduct(p);
-        productAnnouncement.setSeller(seller);
+    public ProductAnnouncementDto save(ProductAnnouncementDto productAnnouncementDto) {
+        Product p = productService.getProduct(productAnnouncementDto.getProductId());
+        Seller seller = sellerService.getSeller(productAnnouncementDto.getSellerId());
+        ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto,seller,p);
 
         //Todo implementar sevice de seller para validar
 
-        ProductAnnouncement pa = productAnnouncementRepository.save(productAnnouncement);
+        productAnnouncementRepository.save(productAnnouncement);
 
-        return ProductAnnouncementDto.convert(pa);
+        return productAnnouncementDto;
     }
 
 }
