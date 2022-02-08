@@ -23,16 +23,14 @@ import com.w4.projetoIntegrador.repository.SectionRepository.ValidDueDateProduct
 public class SectionTest {
 
     private Warehouse warehouse = Warehouse.builder().id(1l).name("warehouse").build();
-    //private WarehouseDto warehouseDto = WarehouseDto.builder().name("warehouse").build();
     private Section section = Section.builder().id(1l).warehouse(warehouse).totalSpace(11f).build();
     private SectionDto sectionDto = SectionDto.builder().warehouseId(1l).build();
-    //private Section sectionLocation = Section.builder().id(3L).warehouse(warehouse).totalSpace(11f).build();
-   // private Batch batch = Batch.builder().id(3L).dueDate(LocalDate.now()).build();
+
 
 
     private ValidDueDateProductsDto validProduct = ValidDueDateProductsDto.builder()
     .productId(3L)
-    .dueDate(LocalDate.now()).productTypeId(10l).build();
+    .dueDate(LocalDate.now()).productTypeId(2L).build();
 
     @Test
     public void deveCadastrarUmWarehouse() {
@@ -80,18 +78,15 @@ public class SectionTest {
         SectionRepository.ValidDueDateProducts mockSectionValidDueDateInterface = Mockito.mock(SectionRepository.ValidDueDateProducts.class);
 
         List<ValidDueDateProducts>  validDueDateProducts = new ArrayList<>();
-        //List<ValidDueDateProductsDto> validDueDateList = new ArrayList<ValidDueDateProductsDto>();
 
-       // Mockito.when(mockWarehouseService.getWarehouse(Mockito.any())).thenReturn(warehouse);
-       // Mockito.when(mockSectionRepository.save(Mockito.any())).thenReturn(section);
+
         Mockito.when(mockSectionRepository.findValidDueDateProducts(Mockito.anyLong())).thenReturn(validDueDateProducts);
 
      
 
         SectionService sectionService = new SectionService(mockSectionRepository,mockWarehouseService);
 
-        //act
-        //SectionDto s = sectionService.save(sectionDto);
+
 
         Mockito.when(mockSectionValidDueDateInterface.getDueDate()).thenReturn(validProduct.getDueDate());
         Mockito.when(mockSectionValidDueDateInterface.getProductId()).thenReturn(validProduct.getProductId());
@@ -133,9 +128,6 @@ public class SectionTest {
         Mockito.when(mockSectionRepository.findValidDueDateProductsByCategoryAsc(Mockito.anyInt())).thenReturn(listA);
 
         List<ValidDueDateProductsDto> validDueDateDtoList = sectionService.getValidDueDateProductsByCategory("congelado", 3,"asc");
-
-        System.out.println(validDueDateDtoList);
-        System.out.println(listA.get(0).getProductTypeId());
 
         assertEquals(validDueDateDtoList.get(0).getProductTypeId(), listA.get(0).getProductTypeId());
 
