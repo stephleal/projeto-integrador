@@ -17,7 +17,8 @@ public class SellerService {
 
     public Seller getSeller(Long id) {
         try {
-            return sellerRepository.findById(id).orElse(null);
+            Seller seller = sellerRepository.findById(id).orElse(null);
+            return seller;
         } catch (RuntimeException e) {
             throw new NotFoundException("Seller " + id + " não encontrado na base de dados.");
         }
@@ -25,7 +26,12 @@ public class SellerService {
 
     public SellerDto get(Long id) {
         Seller seller = getSeller(id);
-        return SellerDto.convert(seller);
+        try {
+            return SellerDto.convert(seller);
+        } catch (RuntimeException e) {
+            throw new NotFoundException("Seller " + id + " não encontrado na base de dados.");
+        }
+
     }
 
     public SellerDto save(SellerDto sellerDto) {
