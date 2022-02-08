@@ -17,16 +17,16 @@ public class BatchService {
     }
 
     public BatchDto get(Long id) {
-            return BatchDto.convert(getBatch(id));
-    }
-
-    public Batch getBatch(Long id) {
         try {
-            Batch batch = batchRepository.findById(id).orElse(null);
-            return batch;
+        return BatchDto.convert(getBatch(id));
         } catch (RuntimeException e) {
             throw new NotFoundException("Batch " + id + " não encontrado na base de dados.");
         }
+    }
+
+    public Batch getBatch(Long id) {
+
+           return batchRepository.findById(id).orElse(null);
     }
 
 }
