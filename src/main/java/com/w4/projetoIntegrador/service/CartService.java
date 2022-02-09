@@ -5,7 +5,6 @@ import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.CartRepository;
-import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,18 +18,15 @@ public class CartService {
     BuyerService buyerService;
     ItemCartService itemCartService;
     ProductAnnouncementService productAnnouncementService;
-    ItemCartRepository itemCartRepository;
 
     public CartService(CartRepository cartRepository,
                        BuyerService buyerService,
                        ItemCartService itemCartService,
-                       ProductAnnouncementService productAnnouncementService,
-                       ItemCartRepository itemCartRepository) {
+                       ProductAnnouncementService productAnnouncementService) {
         this.cartRepository = cartRepository;
         this.buyerService = buyerService;
         this.itemCartService = itemCartService;
         this.productAnnouncementService = productAnnouncementService;
-        this.itemCartRepository = itemCartRepository;
     }
 
     public CartDto get(Long id) {
@@ -42,7 +38,6 @@ public class CartService {
 
 
     public Cart getCart(Long id) {
-
         try {
             Cart cart = cartRepository.findById(id).orElse(new Cart());
             List<ProductAnnouncement> productAnnouncements = new ArrayList<ProductAnnouncement>();
@@ -56,7 +51,6 @@ public class CartService {
     }
 
     public CartDto create(CartDto cartDto) {
-
         Buyer buyer = buyerService.getBuyer(cartDto.getBuyerId());
         Cart cart = CartDto.convert(cartDto);
         cart.setBuyer(buyer);
@@ -78,7 +72,7 @@ public class CartService {
         Cart cart = cartRepository.findById(id).orElse(null);
         cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
         cart.setDate(cartDto.getDate());
-        cart.setStatusCode(cart.getStatusCode());
+        cart.setStatusCode(cartDto.getStatusCode());
 
         List<ItemCart> itemCarts = new ArrayList<>();
 
@@ -91,14 +85,13 @@ public class CartService {
             itemCarts.add(itemCart);
         }
         cart.setItemCarts(itemCarts);
-        cartRepository.save(cart);
+        cart = cartRepository.save(cart);
         cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
 
-        return cartDto;
+        return CartDto.convert(cart);
     }
 
     private BigDecimal getTotalPrice(List<ItemCart> itemCartList) {
-
         BigDecimal value = new BigDecimal(0);
         for (ItemCart itemCart : itemCartList) {
             ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(itemCart.getProductAnnouncement().getId());
@@ -109,16 +102,13 @@ public class CartService {
     }
 
     public CartDto cancelCart(Long id) {
-
         Cart cart = getCart(id);
 
-        for (ItemCart itemCart : cart.getItemCarts()) {
-            itemCart.setCart(null);
-        }
-        itemCartRepository.saveAll(cart.getItemCarts());
+        itemCartService.clearCartFortItemCarts(cart);
         cart.setItemCarts(new ArrayList<>());
         cart.setStatusCode("Cancelado");
 
         return CartDto.convert(cartRepository.save(cart));
     }
+
 }
