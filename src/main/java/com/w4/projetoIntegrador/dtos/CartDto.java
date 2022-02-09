@@ -2,6 +2,7 @@ package com.w4.projetoIntegrador.dtos;
 
 import com.w4.projetoIntegrador.entities.Cart;
 import com.w4.projetoIntegrador.entities.ItemCart;
+import com.w4.projetoIntegrador.enums.StatusCodeTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class CartDto {
     @NotNull
     private Long buyerId;
 
-    private String statusCode;
+    private StatusCodeTypes statusCode;
 
     private List<ItemCartDto> products;
 

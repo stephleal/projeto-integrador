@@ -4,6 +4,7 @@ import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
+import com.w4.projetoIntegrador.enums.StatusCodeTypes;
 import com.w4.projetoIntegrador.exceptions.CartCannotBeCancelException;
 import com.w4.projetoIntegrador.repository.CartRepository;
 import com.w4.projetoIntegrador.service.*;
@@ -63,11 +64,11 @@ public class CartServiceTest {
 
     Buyer buyer = Buyer.builder().id(1L).name("buyer").build();
 
-    Cart cart = Cart.builder().date(LocalDate.now()).statusCode("aberto").buyer(buyer).itemCarts(itemCartsList).build();
-    Cart cart2 = Cart.builder().date(LocalDate.now()).statusCode("fechado").buyer(buyer).itemCarts(itemCartsList).build();
+    Cart cart = Cart.builder().date(LocalDate.now()).statusCode(StatusCodeTypes.ABERTO).buyer(buyer).itemCarts(itemCartsList).build();
+    Cart cart2 = Cart.builder().date(LocalDate.now()).statusCode(StatusCodeTypes.FECHADO).buyer(buyer).itemCarts(itemCartsList).build();
 
-    CartDto cartDto = CartDto.builder().date(LocalDate.now()).statusCode("aberto").products(itemCartsListDto).buyerId(1L).build();
-    CartDto cartDto2 = CartDto.builder().date(LocalDate.now()).statusCode("fechado").products(itemCartsListDto).buyerId(1L).build();
+    CartDto cartDto = CartDto.builder().date(LocalDate.now()).statusCode(StatusCodeTypes.ABERTO).products(itemCartsListDto).buyerId(1L).build();
+    CartDto cartDto2 = CartDto.builder().date(LocalDate.now()).statusCode(StatusCodeTypes.FECHADO).products(itemCartsListDto).buyerId(1L).build();
 
     @Test
     public void deveCadastrarUmCart() {
@@ -153,8 +154,8 @@ public class CartServiceTest {
 
         Assertions.assertEquals(new ArrayList<>(), cartDto.getProducts());
         Assertions.assertEquals(new ArrayList<>(), cart.getItemCarts());
-        Assertions.assertEquals("Cancelado", cartDto.getStatusCode());
-        Assertions.assertEquals("Cancelado", cart.getStatusCode());
+        Assertions.assertEquals(StatusCodeTypes.CANCELADO, cartDto.getStatusCode());
+        Assertions.assertEquals(StatusCodeTypes.CANCELADO, cart.getStatusCode());
 
         Mockito.verify(mockItemCartService).clearCartForItemCarts(cart);
 
@@ -169,7 +170,7 @@ public class CartServiceTest {
 
         Mockito.when(mockCartRepository.findById(1L)).thenReturn(Optional.of(cart));
         Mockito.when(mockCartRepository.save(cart)).thenReturn(cart);
-        cart.setStatusCode("Fechado");
+        cart.setStatusCode(StatusCodeTypes.FECHADO);
 
         CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
 

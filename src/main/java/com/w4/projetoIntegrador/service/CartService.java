@@ -3,6 +3,7 @@ package com.w4.projetoIntegrador.service;
 import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
+import com.w4.projetoIntegrador.enums.StatusCodeTypes;
 import com.w4.projetoIntegrador.exceptions.CartCannotBeCancelException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.CartRepository;
@@ -105,10 +106,10 @@ public class CartService {
     public CartDto cancelCart(Long id) {
         Cart cart = getCart(id);
 
-        if(!cart.getStatusCode().equalsIgnoreCase("fechado")) {
+        if(cart.getStatusCode() != StatusCodeTypes.FECHADO) {
             itemCartService.clearCartForItemCarts(cart);
             cart.setItemCarts(new ArrayList<>());
-            cart.setStatusCode("Cancelado");
+            cart.setStatusCode(StatusCodeTypes.CANCELADO);
         } else {
             throw new CartCannotBeCancelException();
         }

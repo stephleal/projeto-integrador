@@ -2,6 +2,7 @@ package com.w4.projetoIntegrador.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.w4.projetoIntegrador.enums.StatusCodeTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,8 @@ public class Cart {
     @Transient
     private Long buyerId;
 
-    private String statusCode;
+    @Enumerated(EnumType.STRING)
+    private StatusCodeTypes statusCode;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ItemCart> itemCarts;
