@@ -923,7 +923,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDE1NDMyLCJleHAiOjE2NDQ1MDE4MzJ9.caY33sOHVHhkoUqxCrh5UBTSLpovJUA9XX20ytQUiNg",
 											"type": "string"
 										}
 									]
@@ -932,7 +932,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 2,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"productAnnouncementId\": 2,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"raw": "{\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 2,\n        \"statusCode\": \"ABERTO\",\n   \n   \"products\": [\n       {\n           \"productAnnouncementId\": 2,\n           \"quantity\": 2\n      \n       },\n        {\n           \"productAnnouncementId\": 3,\n           \"quantity\": 4\n      \n       }\n      \n   ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -964,7 +964,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDE1NDMyLCJleHAiOjE2NDQ1MDE4MzJ9.caY33sOHVHhkoUqxCrh5UBTSLpovJUA9XX20ytQUiNg",
 											"type": "string"
 										}
 									]
@@ -973,7 +973,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 1,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"id\":1,\n           \"productAnnouncementId\": 1,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"raw": "{\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 1,\n        \"statusCode\": \"ABERTO\",\n   \n   \"products\": [\n       {\n           \"id\":1,\n           \"productAnnouncementId\": 1,\n           \"quantity\": 2\n      \n       },\n       {\n           \"id\":2,\n           \"productAnnouncementId\": 2,\n           \"quantity\": 2\n       }\n      \n   ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -981,7 +981,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/29",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -992,7 +992,7 @@
 										"v1",
 										"fresh-products",
 										"orders",
-										"1"
+										"29"
 									]
 								}
 							},
@@ -1026,7 +1026,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/orders/27",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/29",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1037,7 +1037,7 @@
 										"v1",
 										"fresh-products",
 										"orders",
-										"27"
+										"29"
 									]
 								}
 							},
@@ -1059,7 +1059,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/orders/27",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/26",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1070,7 +1070,7 @@
 										"v1",
 										"fresh-products",
 										"orders",
-										"27"
+										"26"
 									]
 								}
 							},
