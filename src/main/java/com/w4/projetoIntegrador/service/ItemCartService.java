@@ -6,8 +6,6 @@ import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ItemCartService {
 
@@ -32,7 +30,7 @@ public class ItemCartService {
         return itemCartRepository.save(itemCart);
     }
 
-    public void clearCartFortItemCarts(Cart cart) {
+    public void clearCartForItemCarts(Cart cart) {
         for (ItemCart itemCart : cart.getItemCarts()) {
             itemCart.setCart(null);
         }

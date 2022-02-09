@@ -1,19 +1,16 @@
 package com.w4.projetoIntegrador.unitTests;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
-import com.w4.projetoIntegrador.dtos.WarehouseDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
+import com.w4.projetoIntegrador.exceptions.CartCannotBeCancelException;
 import com.w4.projetoIntegrador.repository.CartRepository;
-import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import com.w4.projetoIntegrador.service.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -140,4 +137,44 @@ public class CartServiceTest {
         assertEquals(c.getDate(), cart.getDate());
     }
 
+    @Test
+    public void deveCancelarUmCart(){
+        CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
+        BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
+        ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
+
+        Mockito.when(mockCartRepository.findById(1L)).thenReturn(Optional.of(cart));
+        Mockito.when(mockCartRepository.save(cart)).thenReturn(cart);
+
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
+
+        CartDto cartDto = cartService.cancelCart(1L);
+
+        Assertions.assertEquals(new ArrayList<>(), cartDto.getProducts());
+        Assertions.assertEquals(new ArrayList<>(), cart.getItemCarts());
+        Assertions.assertEquals("Cancelado", cartDto.getStatusCode());
+        Assertions.assertEquals("Cancelado", cart.getStatusCode());
+
+        Mockito.verify(mockItemCartService).clearCartForItemCarts(cart);
+
+    }
+
+    @Test
+    public void deveLancarUmaExcecaoAoCancelarCartFechado() {
+        CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
+        BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
+        ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
+
+        Mockito.when(mockCartRepository.findById(1L)).thenReturn(Optional.of(cart));
+        Mockito.when(mockCartRepository.save(cart)).thenReturn(cart);
+        cart.setStatusCode("Fechado");
+
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
+
+        Assertions.assertThrows(CartCannotBeCancelException.class, () -> {
+             cartService.cancelCart(1L);
+        });
+    }
 }

@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.advice;
 
 import com.w4.projetoIntegrador.exceptions.BusinessException;
+import com.w4.projetoIntegrador.exceptions.CartCannotBeCancelException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.exceptions.UserDoesNotExistException;
 import org.slf4j.Logger;
@@ -58,6 +59,13 @@ public class PersistenceExceptionAdvice {
         String bodyOfResponse = ex.getMessage();
         log.warn(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(bodyOfResponse);
+    }
+
+    @ExceptionHandler(value = CartCannotBeCancelException.class)
+    protected ResponseEntity<Object> cartCannotBeCancelException(CartCannotBeCancelException ex, WebRequest request) {
+        String bodyOfResponse = ex.getMessage();
+        log.warn(ex.getMessage(), ex);
+        return ResponseEntity.status(422).body(bodyOfResponse);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

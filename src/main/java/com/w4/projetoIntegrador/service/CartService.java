@@ -3,6 +3,7 @@ package com.w4.projetoIntegrador.service;
 import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
 import com.w4.projetoIntegrador.entities.*;
+import com.w4.projetoIntegrador.exceptions.CartCannotBeCancelException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.CartRepository;
 import org.springframework.stereotype.Service;
@@ -104,10 +105,13 @@ public class CartService {
     public CartDto cancelCart(Long id) {
         Cart cart = getCart(id);
 
-        itemCartService.clearCartFortItemCarts(cart);
-        cart.setItemCarts(new ArrayList<>());
-        cart.setStatusCode("Cancelado");
-
+        if(!cart.getStatusCode().equalsIgnoreCase("fechado")) {
+            itemCartService.clearCartForItemCarts(cart);
+            cart.setItemCarts(new ArrayList<>());
+            cart.setStatusCode("Cancelado");
+        } else {
+            throw new CartCannotBeCancelException();
+        }
         return CartDto.convert(cartRepository.save(cart));
     }
 

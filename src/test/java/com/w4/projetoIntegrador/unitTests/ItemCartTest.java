@@ -5,17 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import com.w4.projetoIntegrador.entities.ItemCart;
-import com.w4.projetoIntegrador.entities.Product;
-import com.w4.projetoIntegrador.entities.ProductAnnouncement;
-import com.w4.projetoIntegrador.entities.Seller;
+import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import com.w4.projetoIntegrador.service.ItemCartService;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -80,5 +80,17 @@ public class ItemCartTest {
         
         assertTrue(notFoundException.getMessage().contains("Product 100 não encontrada na base de dados."));
 
+    }
+
+    @Test
+    public void deveLimparCartDosItemCarts(){
+        List<ItemCart> itemCartList = new ArrayList<>();
+        itemCartList.add(itemCart);
+        Cart cart = Cart.builder().itemCarts(itemCartList).build();
+        itemCart.setCart(cart);
+        ItemCartRepository mockItemCartRepository = Mockito.mock(ItemCartRepository.class);
+        ItemCartService itemCartService = new ItemCartService(mockItemCartRepository);
+        itemCartService.clearCartForItemCarts(cart);
+        Assertions.assertNull(itemCart.getCart());
     }
 }

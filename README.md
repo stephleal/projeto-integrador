@@ -21,8 +21,9 @@ Implemented
    - Consultar a validade por lote.
    - Get verificando validade
    - Get verificando categoria e dias a vencer de um produto.
- 
- Todo list
+
+  ### US6
+   - Cancelar carrinho de compras.
 
 
 ### Revisão final
