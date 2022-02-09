@@ -63,10 +63,10 @@ public class CartService {
             itemCartList.add(ItemCartDto.convert(itemCartDto, p, cart));
         }
         cart.setItemCarts(itemCartList);
-        cartRepository.save(cart);
-        cartDto.setId(cart.getId());
-        cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
-        return cartDto;
+        cart = cartRepository.save(cart);
+        CartDto cartDtoSaved = CartDto.convert(cart);
+        cartDtoSaved.setTotalPrice(getTotalPrice(cart.getItemCarts()));
+        return cartDtoSaved;
     }
 
     public CartDto updateCart(Long id, CartDto cartDto) {
@@ -87,9 +87,9 @@ public class CartService {
         }
         cart.setItemCarts(itemCarts);
         cart = cartRepository.save(cart);
-        cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
-
-        return CartDto.convert(cart);
+        CartDto cartDtoSaved = CartDto.convert(cart);
+        cartDtoSaved.setTotalPrice(getTotalPrice(cart.getItemCarts()));
+        return cartDtoSaved;
     }
 
     private BigDecimal getTotalPrice(List<ItemCart> itemCartList) {

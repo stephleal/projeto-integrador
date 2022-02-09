@@ -1,4 +1,4 @@
-## Projeto Integrador
+## Projeto Integrador - US6 (Cancelar Carrinho de Compras)
 
 Implemented
 ### US1
@@ -24,14 +24,8 @@ Implemented
 
   ### US6
    - Cancelar carrinho de compras.
-
-
-### Revisão final
-- Refatorar Classes separando Entities de DTOs
-- (Testes)
-- (Documentação )
-- (Readme.md)
-- (Incluir o modelo)
+   - Delete removendo os itens do carrinho de compras.
+   
 
 Modelo de SQL
 
