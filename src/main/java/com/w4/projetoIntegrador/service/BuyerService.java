@@ -11,7 +11,7 @@ public class BuyerService {
 
     BuyerRepository buyerRepository;
 
-    public BuyerService(BuyerRepository buyerRepository){
+    public BuyerService(BuyerRepository buyerRepository) {
         this.buyerRepository = buyerRepository;
     }
 
@@ -20,11 +20,9 @@ public class BuyerService {
     }
 
     public Buyer getBuyer(Long id) {
-        try {
-            return buyerRepository.findById(id).orElse(null);
-        } catch (RuntimeException e) {
-            throw new NotFoundException("Comprador " + id + " não encontrado na base de dados.");
-        }
+        return buyerRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Comprador " + id + " não encontrado na base de dados."));
     }
 
     public BuyerDto create(BuyerDto buyerDto) {
